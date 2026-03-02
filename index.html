@@ -1218,7 +1218,41 @@ function buildLink(number,currency,message){
   return 'https://wa.me/'+n+'?text='+encodeURIComponent(message);
 }
 
-function generate(){
+async function generate(){
+  const usage=getUsage();
+  if(usage.count>=LIMIT){document.getElementById('limitModal').classList.add('show');return;}
+  if(!validate()){shake();return;}
+  const d=getFormData();
+  const btn=document.getElementById('genBtn'),ldr=document.getElementById('loader');
+  btn.style.display='none';ldr.classList.add('show');
+  try{
+    const res=await fetch('https://chat2cash.onrender.com/generate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({msgType:msgType,style:mode,formData:d})
+    });
+    const data=await res.json();
+    const msg=data.message;
+    const link=buildLink(v('waNumber'),d.cur||'\u20a6',msg);
+    document.getElementById('salesMsg').textContent=msg;
+    document.getElementById('linkBox').textContent=link;
+    document.getElementById('waBtn').href=link;
+    const chip=document.getElementById('styleChip');
+    chip.textContent=mode==='fire'?'Nigerian Fire':'Global Pro';
+    chip.className='style-chip '+(mode==='fire'?'chip-fire':'chip-global');
+    ldr.classList.remove('show');btn.style.display='';
+    document.getElementById('formCard').style.display='none';
+    document.querySelector('.toggle-card').style.display='none';
+    document.querySelector('.type-card').style.display='none';
+    document.getElementById('outputSection').style.display='block';
+    usage.count++;saveUsage(usage);refreshCount();
+    gtag('event','message_generated',{event_category:'engagement',event_label:mode+'_'+msgType});
+    window.scrollTo({top:document.getElementById('tool').offsetTop-80,behavior:'smooth'});
+  }catch(e){
+    ldr.classList.remove('show');btn.style.display='';
+    alert('Could not connect. Please try again.');
+  }
+}
   const usage=getUsage();
   if(usage.count>=LIMIT){document.getElementById('limitModal').classList.add('show');return;}
   if(!validate()){shake();return;}
