@@ -502,6 +502,229 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
   .next-step-grid{grid-template-columns:1fr;}
 }
 
+
+/* ===== TABS ===== */
+.tool-tabs{display:flex;gap:8px;margin-bottom:20px;}
+.tool-tab{flex:1;padding:13px 10px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--muted);transition:all .2s;user-select:none;}
+.tool-tab:hover{border-color:rgba(255,255,255,.15);color:var(--text);}
+.tool-tab.active{background:var(--glow);border-color:rgba(37,211,102,.45);color:var(--green);}
+.tool-tab-icon{font-size:20px;display:block;margin-bottom:4px;}
+
+/* ===== SMART REPLY ===== */
+#smartReplySection{display:none;}
+#smartReplySection.active{display:block;animation:fu .35s ease both;}
+
+.reply-scenarios{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
+.scenario-chip{padding:10px 12px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;font-size:12.5px;color:var(--muted);text-align:center;transition:all .2s;user-select:none;line-height:1.4;}
+.scenario-chip:hover{border-color:rgba(255,255,255,.18);color:var(--text);}
+.scenario-chip.sel{background:var(--glow);border-color:rgba(37,211,102,.42);color:var(--green);}
+
+.sr-out-card{background:var(--card);border:1px solid rgba(37,211,102,.3);border-radius:18px;padding:20px;margin-bottom:12px;display:none;animation:fu .4s ease both;}
+.sr-out-card.show{display:block;}
+
+
+/* ===== OYA SUITE BAR ===== */
+.suite-bar{
+  width:100%;
+  background:rgba(9,12,10,0.98);
+  border-bottom:1px solid rgba(37,211,102,0.15);
+  padding:0;
+  position:sticky;
+  top:0;
+  z-index:200;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.suite-bar-inner{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 20px;
+  gap:12px;
+}
+.suite-brand{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  flex-shrink:0;
+}
+.suite-brand-box{
+  width:26px;height:26px;
+  background:linear-gradient(135deg,#25D366,#1db954);
+  border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+  box-shadow:0 2px 8px rgba(37,211,102,0.35);
+}
+.suite-brand-name{
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:800;
+  color:#eef2ef;
+  letter-spacing:0.02em;
+}
+.suite-brand-name span{color:#25D366;}
+.suite-products{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.suite-products::-webkit-scrollbar{display:none;}
+.suite-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:5px 12px;
+  border-radius:100px;
+  font-size:11.5px;
+  font-weight:700;
+  font-family:'DM Sans',sans-serif;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:all .2s;
+  border:1.5px solid transparent;
+}
+.suite-pill.active{
+  background:rgba(37,211,102,0.12);
+  border-color:rgba(37,211,102,0.35);
+  color:#25D366;
+}
+.suite-pill.inactive{
+  background:rgba(255,255,255,0.04);
+  border-color:rgba(255,255,255,0.08);
+  color:#6b7d70;
+}
+.suite-pill.inactive:hover{
+  background:rgba(255,255,255,0.08);
+  border-color:rgba(255,255,255,0.15);
+  color:#eef2ef;
+}
+.suite-pill-dot{
+  width:5px;height:5px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.suite-pill.active .suite-pill-dot{background:#25D366;}
+.suite-pill.inactive .suite-pill-dot{background:#3a5040;}
+
+@media(max-width:480px){
+  .suite-bar-inner{padding:7px 14px;}
+  .suite-brand-name{font-size:12px;}
+  .suite-pill{font-size:10.5px;padding:4px 10px;}
+}
+
+
+/* ===== SUITE TOOLTIP ===== */
+.suite-pill[title]{position:relative;}
+.suite-pill[title]:active::after,
+.suite-pill[title]:focus::after{
+  content:attr(title);
+  position:absolute;
+  top:calc(100%% + 8px);
+  left:50%%;
+  transform:translateX(-50%%);
+  background:rgba(13,24,15,0.98);
+  border:1px solid rgba(37,211,102,0.25);
+  color:#b8c9bc;
+  font-size:11px;
+  font-weight:400;
+  padding:8px 12px;
+  border-radius:10px;
+  white-space:nowrap;
+  z-index:999;
+  pointer-events:none;
+  max-width:240px;
+  white-space:normal;
+  text-align:center;
+  line-height:1.5;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* Desktop hover */
+@media(hover:hover){
+  .suite-pill[title]:hover::after{
+    content:attr(title);
+    position:absolute;
+    top:calc(100%% + 8px);
+    left:50%%;
+    transform:translateX(-50%%);
+    background:rgba(13,24,15,0.98);
+    border:1px solid rgba(37,211,102,0.25);
+    color:#b8c9bc;
+    font-size:11px;
+    padding:8px 12px;
+    border-radius:10px;
+    white-space:normal;
+    z-index:999;
+    pointer-events:none;
+    max-width:240px;
+    text-align:center;
+    line-height:1.5;
+    box-shadow:0 8px 24px rgba(0,0,0,0.5);
+  }
+}
+
+
+.suite-brand-name-wrap{display:flex;flex-direction:column;gap:1px;}
+.suite-brand-sub{font-size:9px;color:#3a5040;font-family:'DM Sans',sans-serif;letter-spacing:0.04em;}
+
+
+/* ===== IMAGE UPLOAD ===== */
+.img-upload-zone{
+  border:2px dashed rgba(37,211,102,0.25);
+  border-radius:16px;
+  padding:24px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .2s;
+  background:rgba(37,211,102,0.03);
+  margin-bottom:14px;
+  position:relative;
+}
+.img-upload-zone:hover,.img-upload-zone.drag{
+  border-color:rgba(37,211,102,0.5);
+  background:rgba(37,211,102,0.07);
+}
+.img-upload-zone input[type=file]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.img-upload-icon{font-size:36px;margin-bottom:8px;}
+.img-upload-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.img-upload-sub{font-size:12px;color:var(--muted);}
+.img-preview-wrap{display:none;margin-bottom:14px;}
+.img-preview-wrap.show{display:block;}
+.img-preview{
+  width:100%;max-height:200px;object-fit:cover;
+  border-radius:12px;border:1px solid var(--border);
+}
+.img-preview-actions{display:flex;gap:8px;margin-top:8px;}
+.img-preview-link{
+  flex:1;padding:10px;background:var(--glow);
+  border:1px solid rgba(37,211,102,0.25);
+  border-radius:10px;font-size:12px;color:var(--green);
+  word-break:break-all;text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+}
+.img-remove-btn{
+  padding:10px 14px;background:rgba(255,80,80,0.08);
+  border:1px solid rgba(255,80,80,0.2);
+  border-radius:10px;font-size:12px;color:#ff6b6b;
+  cursor:pointer;white-space:nowrap;
+}
+.img-uploading{
+  display:none;align-items:center;gap:10px;
+  padding:12px;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;
+  font-size:13px;color:var(--muted);margin-bottom:14px;
+}
+.img-uploading.show{display:flex;}
+
 </style>
 </head>
 <body>
@@ -510,6 +733,33 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 <div class="sticky-cta" id="stickyCta"><a href="#tool" class="sticky-btn">⚡ Generate Free Message</a></div>
 
 <!-- NAV -->
+<!-- OYA SUITE BAR -->
+<div class="suite-bar">
+  <div class="suite-bar-inner">
+    <a href="https://mrsmile-build.github.io/oya/" class="suite-brand" target="_blank" title="OYA Suite — African-built tools for sellers, creators and entrepreneurs">
+      <div class="suite-brand-box">⚡</div>
+      <div class="suite-brand-name-wrap">
+        <div class="suite-brand-name">OYA <span>Suite</span></div>
+        <div class="suite-brand-sub">3 tools. 1 mission.</div>
+      </div>
+    </a>
+    <div class="suite-products">
+      <a href="https://mrsmile-build.github.io/chat2cash/" class="suite-pill active">
+        <span class="suite-pill-dot"></span>
+        💬 Chat2Cash
+      </a>
+      <a href="https://mrsmile-build.github.io/oya/" class="suite-pill inactive" target="_blank" title="OYA AI — African AI assistant for students, creators and entrepreneurs">
+        <span class="suite-pill-dot"></span>
+        ⚡ OYA AI
+      </a>
+      <a href="https://mrsmile-build.github.io/quicksite-builder/" class="suite-pill inactive" target="_blank" title="QuickSite — Build a free business website in minutes. No coding needed.">
+        <span class="suite-pill-dot"></span>
+        🌐 QuickSite
+      </a>
+    </div>
+  </div>
+</div>
+
 <nav>
   <a href="#" class="nav-logo">
     <div class="nav-logo-box">💬</div>
@@ -541,21 +791,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
       <a href="#how" class="btn-ghost">See How It Works</a>
     </div>
     <p class="hero-note">100% free · No signup · Works on any phone · Scroll down and try it now</p>
-    <div class="hero-preview">
-      <div class="preview-label"><span class="bdot"></span> Example Generated Message</div>
-      <div class="preview-msg">ATTENTION LADIES WHO WANT GLOWING SKIN!
 
-Are you tired of creams that never deliver?
-
-Introducing Brightening Body Cream
-- Smoother, glowing skin in 7 days
-- Price: 3,500
-- Same day delivery in Lagos
-
-Only 3 pots left this week!
-
-Reply ORDER now</div>
-      <div class="preview-footer">Your message will look like this. Generated in 10 seconds.</div>
     </div>
   </div>
 </section>
@@ -574,6 +810,20 @@ Reply ORDER now</div>
       <h2 class="sec-title">Create Your Sales Message <em>Right Here</em></h2>
       <p class="sec-sub" style="margin-inline:auto">Fill in your details and get your high-converting message in seconds.</p>
     </div>
+
+    <!-- TABS -->
+    <div class="tool-tabs">
+      <div class="tool-tab active" id="tab-generate" onclick="switchTab('generate')">
+        <span class="tool-tab-icon">⚡</span>
+        Message Generator
+      </div>
+      <div class="tool-tab" id="tab-smartreply" onclick="switchTab('smartreply')">
+        <span class="tool-tab-icon">💬</span>
+        Smart Reply
+      </div>
+    </div>
+
+    <div id="generateSection">
     <div class="usage-row"><div class="usage-pill">⚡ <span id="usageCount">3</span> free generations left today</div></div>
 
     <!-- STEP 1: TYPE -->
@@ -1306,6 +1556,502 @@ function toggleFaq(btn){
   if(!isOpen){ answer.classList.add('open'); icon.classList.add('open'); }
 }
 
+
+
+/* ===== TAB SWITCHING ===== */
+function switchTab(tab){
+  document.getElementById('tab-generate').className = 'tool-tab' + (tab==='generate' ? ' active' : '');
+  document.getElementById('tab-smartreply').className = 'tool-tab' + (tab==='smartreply' ? ' active' : '');
+  document.getElementById('generateSection').style.display = tab==='generate' ? '' : 'none';
+  const sr = document.getElementById('smartReplySection');
+  sr.style.display = tab==='smartreply' ? 'block' : 'none';
+  sr.className = tab==='smartreply' ? 'active' : '';
+  gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
+}
+
+/* ===== SCENARIO SELECTION ===== */
+let srScenario = '';
+function selectScenario(el, val){
+  document.querySelectorAll('.scenario-chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  srScenario = val;
+  document.getElementById('sr-scenario').value = val;
+  document.getElementById('customMsgField').style.display = val==='custom' ? 'block' : 'none';
+}
+
+/* ===== SMART REPLY BUILDERS ===== */
+function buildReply(scenario, d){
+  const cur = d.cur, prod = d.product, price = d.price, loc = d.location,
+        del = d.delivery, pay = d.payment, disc = d.discount, custom = d.custom;
+
+  if(scenario==='price'){
+    if(disc && disc.toLowerCase()!=='no'){
+      return `I understand you completely 🙏
+
+Here is what I can do for you as a valued customer:
+
+${prod} — ${cur}${price}
+${disc}
+
+This is genuinely my best offer. The quality alone is worth every kobo.
+
+Payment: ${pay}
+Delivery: ${del} (${loc})
+
+Send me your address and let us close this today 🤝`;
+    } else {
+      return `I really appreciate your interest 🙏
+
+I have to be honest with you — ${cur}${price} is already my final price for ${prod}.
+
+But here is what you get:
+✅ Top quality guaranteed
+✅ Delivery: ${del}
+✅ Payment: ${pay}
+
+I would rather give you full value at this price than reduce and give you something less.
+
+Shall I hold one for you? 😊`;
+    }
+  }
+
+  if(scenario==='location'){
+    return `We are based in ${loc} 📍
+
+For ${prod}:
+🚚 Delivery: ${del}
+💳 Payment: ${pay}
+💰 Price: ${cur}${price}
+
+We deliver to your door — you do not need to come to us.
+
+Just send your full address and we sort everything out for you 🙌`;
+  }
+
+  if(scenario==='delivery'){
+    return `Great question! Here is how delivery works 🚚
+
+📦 Product: ${prod}
+📍 We ship from: ${loc}
+⏱️ Delivery time: ${del}
+💰 Price: ${cur}${price}
+💳 Payment: ${pay}
+
+Once you confirm your order and make payment, we dispatch immediately.
+
+What is your delivery address? Let us get this moving for you today 🔥`;
+  }
+
+  if(scenario==='original'){
+    return `100% original. I stake my reputation on it ✅
+
+${prod} — ${cur}${price}
+
+Every item I sell goes through quality check before it leaves my hands. I have been in this business too long to sell fake products and destroy my name.
+
+If you receive anything less than what I described, I will refund you fully. That is my guarantee.
+
+Delivery: ${del} from ${loc}
+Payment: ${pay}
+
+Ready to order? 🙌`;
+  }
+
+  if(scenario==='payment'){
+    return `Payment is very easy and flexible 💳
+
+We accept:
+${pay}
+
+📦 ${prod} — ${cur}${price}
+🚚 Delivery: ${del}
+📍 Location: ${loc}
+
+Once payment is confirmed, we process your order immediately.
+
+Which payment method works best for you? Let us finalize this now 😊`;
+  }
+
+  if(scenario==='interested'){
+    return `Amazing! You made a great choice 🔥
+
+${prod} — ${cur}${price}
+
+Here is what happens next:
+1️⃣ Send me your full delivery address
+2️⃣ Make payment via ${pay}
+3️⃣ We dispatch within ${del}
+
+We are based in ${loc} and we handle everything smoothly.
+
+Send your address now and let us get this done! 🙌`;
+  }
+
+  if(scenario==='thinking'){
+    return `No pressure at all 😊
+
+Just want to quickly let you know — I only have limited stock of ${prod} available at ${cur}${price}.
+
+Once it goes, the price goes up with the next batch.
+
+I would hate for you to miss this and pay more later.
+
+Delivery is ${del} straight to your door from ${loc}.
+
+Take your time — but do not wait too long 🙏`;
+  }
+
+  if(scenario==='custom'){
+    return `Thank you for reaching out! 🙏
+
+Regarding your question about ${prod}:
+
+Price: ${cur}${price}
+Location: ${loc}
+Delivery: ${del}
+Payment: ${pay}${disc ? '
+
+' + disc : ''}
+
+Is there anything else you would like to know? I am here to help you get exactly what you need 😊`;
+  }
+
+  return '';
+}
+
+/* ===== GENERATE REPLY ===== */
+function generateReply(){
+  if(!srScenario){ showToast('Please select what the customer said'); return; }
+  const product = document.getElementById('sr-product').value.trim();
+  const price   = document.getElementById('sr-price').value.trim();
+  const loc     = document.getElementById('sr-location').value.trim();
+  const del     = document.getElementById('sr-delivery').value.trim();
+  const pay     = document.getElementById('sr-payment').value.trim();
+  if(!product || !price || !loc || !del || !pay){
+    showToast('Please fill all required fields');
+    return;
+  }
+  const d = {
+    product, price, cur: document.getElementById('sr-currency').value,
+    location: loc, delivery: del, payment: pay,
+    discount: document.getElementById('sr-discount').value.trim(),
+    custom: document.getElementById('sr-custom') ? document.getElementById('sr-custom').value.trim() : ''
+  };
+  const btn = document.getElementById('srBtn');
+  const ldr = document.getElementById('sr-loader');
+  btn.style.display='none'; ldr.classList.add('show');
+  setTimeout(()=>{
+    const reply = buildReply(srScenario, d);
+    document.getElementById('srMsg').textContent = reply;
+    document.getElementById('srOutput').classList.add('show');
+    ldr.classList.remove('show'); btn.style.display='';
+    gtag('event','smart_reply_generated',{event_category:'engagement',event_label:srScenario});
+    document.getElementById('srOutput').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 900);
+}
+
+function resetSmartReply(){
+  document.getElementById('srOutput').classList.remove('show');
+  document.querySelectorAll('.scenario-chip').forEach(c=>c.classList.remove('sel'));
+  srScenario='';
+  document.getElementById('customMsgField').style.display='none';
+  window.scrollTo({top:document.getElementById('tool').offsetTop-80,behavior:'smooth'});
+}
+
+function srShareWA(){
+  const msg = document.getElementById('srMsg').textContent;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+function srNativeShare(){
+  const msg = document.getElementById('srMsg').textContent;
+  if(navigator.share){ navigator.share({title:'My Reply',text:msg}); }
+  else { navigator.clipboard.writeText(msg).then(()=>showToast('Reply copied!')); }
+}
+
+
+/* ===== BACKEND CONFIG ===== */
+const BACKEND = 'https://chat2cash.onrender.com';
+
+/* ===== IMAGE UPLOAD ===== */
+let uploadedImageUrl = '';
+
+async function handleImageUpload(input){
+  const file = input.files[0];
+  if(!file) return;
+  if(file.size > 5*1024*1024){ showToast('Image too large. Max 5MB.'); return; }
+
+  document.getElementById('imgUploading').classList.add('show');
+  document.getElementById('imgUploadZone').style.display = 'none';
+
+  try {
+    const base64 = await toBase64(file);
+    const b64data = base64.split(',')[1];
+
+    const res = await fetch(`${BACKEND}/upload-image`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({image: b64data})
+    });
+    const data = await res.json();
+
+    if(data.url){
+      uploadedImageUrl = data.url;
+      document.getElementById('imgPreview').src = uploadedImageUrl;
+      document.getElementById('imgLink').href = uploadedImageUrl;
+      document.getElementById('imgLinkText').textContent = uploadedImageUrl;
+      document.getElementById('imgPreviewWrap').classList.add('show');
+      showToast('Image uploaded successfully!');
+      gtag('event','image_uploaded',{event_category:'engagement'});
+    } else {
+      throw new Error('Upload failed');
+    }
+  } catch(e){
+    showToast('Image upload failed. Try again.');
+    document.getElementById('imgUploadZone').style.display = '';
+  }
+  document.getElementById('imgUploading').classList.remove('show');
+}
+
+function toBase64(file){
+  return new Promise((res,rej)=>{
+    const r = new FileReader();
+    r.onload = ()=>res(r.result);
+    r.onerror = ()=>rej(new Error('Read failed'));
+    r.readAsDataURL(file);
+  });
+}
+
+function removeImage(){
+  uploadedImageUrl = '';
+  document.getElementById('imgPreviewWrap').classList.remove('show');
+  document.getElementById('imgUploadZone').style.display = '';
+  document.getElementById('imgFileInput').value = '';
+}
+
+/* ===== GROQ AI MESSAGE GENERATION ===== */
+async function generateWithGroq(formData){
+  const imageNote = uploadedImageUrl 
+    ? `\n\nProduct image link (add this at the end of the message): ${uploadedImageUrl}` 
+    : '';
+
+  const styleNote = formData.style === 'fire' 
+    ? 'Nigerian Fire style: HIGH ENERGY, bold, urgent, scarcity-driven, all caps hook, emojis, built for Nigerian/African WhatsApp sellers.'
+    : 'Global Pro style: calm, professional, persuasive, trust-building, clean formatting, international audience.';
+
+  const typePrompts = {
+    single: `Product: ${formData.product}. Price: ${formData.currency}${formData.price}. Target customer: ${formData.target}. Main benefit: ${formData.benefit}. Delivery: ${formData.delivery}.${formData.qty ? ' Quantity/size: '+formData.qty+'.' : ''}`,
+    collection: `Collection name: ${formData.collection}. Price range: ${formData.currency}${formData.price}. Target customer: ${formData.target}. Delivery: ${formData.delivery}.${formData.pieces ? ' Pieces available: '+formData.pieces+'.' : ''}`,
+    clearance: `Product/category on sale: ${formData.product}. Discount: ${formData.discount}. Original price: ${formData.currency}${formData.origPrice || ''}. Sale price: ${formData.currency}${formData.price}. Sale ends: ${formData.saleEnd}. Delivery: ${formData.delivery}.`,
+    service: `Service: ${formData.service}. Starting price: ${formData.currency}${formData.price}. Target client: ${formData.target}. Main benefit: ${formData.benefit}. Turnaround: ${formData.turnaround}.`
+  };
+
+  const prompt = `You are a WhatsApp sales message expert for African sellers.
+
+Write ONE complete WhatsApp sales message in ${styleNote}
+
+Details: ${typePrompts[formData.type] || typePrompts.single}${imageNote}
+
+Rules:
+- Start with a powerful attention-grabbing hook line
+- Include urgency and scarcity naturally  
+- End with a clear call to action (Reply ORDER, Reply YES, Comment INTERESTED etc)
+- Keep it under 150 words
+- No hashtags
+- No quotation marks around the message
+- Just write the message directly, nothing else`;
+
+  const response = await fetch(`${BACKEND}/generate`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      msgType: formData.type,
+      style: formData.style,
+      formData: {
+        product: formData.product,
+        cur: formData.currency,
+        price: formData.price,
+        target: formData.target,
+        benefit: formData.benefit,
+        speed: formData.delivery,
+        qty: formData.qty,
+        discount: formData.discount,
+        end: formData.saleEnd,
+        original: formData.origPrice,
+      },
+      imageUrl: uploadedImageUrl || ''
+    })
+  });
+
+  if(!response.ok) throw new Error('Backend error');
+  const data = await response.json();
+  return data.message;
+}
+
+/* ===== GROQ SMART REPLY ===== */
+async function generateReplyWithGroq(scenario, d){
+  const scenarioDescriptions = {
+    price: `Customer is asking to reduce the price or negotiate`,
+    location: `Customer is asking where the seller is located`,
+    delivery: `Customer is asking about delivery options and timing`,
+    original: `Customer is asking if the product is original/authentic`,
+    payment: `Customer is asking about payment methods`,
+    interested: `Customer has said they are interested in buying`,
+    thinking: `Customer said they want to think about it`,
+    custom: `Customer said: "${d.custom}"`
+  };
+
+  const prompt = `You are a WhatsApp sales reply expert for African sellers.
+
+Write ONE perfect reply to this customer situation: ${scenarioDescriptions[scenario]}
+
+Seller details:
+- Product: ${d.product}
+- Price: ${d.cur}${d.price}
+- Location: ${d.location}
+- Delivery: ${d.delivery}
+- Payment methods: ${d.payment}${d.discount ? '\n- Discount flexibility: '+d.discount : ''}
+
+Rules:
+- Sound confident but friendly
+- Keep it under 80 words
+- Include relevant details naturally
+- End with a question or clear next step
+- Use emojis sparingly
+- Write the reply directly, no preamble`;
+
+  const response = await fetch(`${BACKEND}/smart-reply`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      scenario: scenario,
+      details: {
+        product: d.product,
+        cur: d.cur,
+        price: d.price,
+        location: d.location,
+        delivery: d.delivery,
+        payment: d.payment,
+        discount: d.discount,
+        custom: d.custom
+      }
+    })
+  });
+
+  if(!response.ok) throw new Error('Backend error');
+  const data = await response.json();
+  return data.reply;
+}
+
+
+/* ===== AI MESSAGE GENERATION WRAPPER ===== */
+async function generateMessageAI(){
+  // Collect all form data
+  const type = document.querySelector('.type-card.active')?.dataset?.type || 'single';
+  const style = document.querySelector('.style-card.active')?.dataset?.style || 'fire';
+  const currency = document.querySelector('#currency')?.value || '₦';
+
+  // Validate required fields first using existing validation
+  const valid = validateForm();
+  if(!valid) return;
+
+  const btn = document.getElementById('genBtn');
+  const ldr = document.getElementById('genLoader');
+  btn.style.display='none';
+  ldr.classList.add('show');
+
+  try {
+    const formData = {
+      type, style, currency,
+      product: document.getElementById('productName')?.value?.trim() || '',
+      price: document.getElementById('price')?.value?.trim() || '',
+      target: document.getElementById('targetCustomer')?.value?.trim() || '',
+      benefit: document.getElementById('mainBenefit')?.value?.trim() || '',
+      delivery: document.getElementById('deliverySpeed')?.value?.trim() || '',
+      qty: document.getElementById('qtySize')?.value?.trim() || '',
+      collection: document.getElementById('collectionName')?.value?.trim() || '',
+      pieces: document.getElementById('piecesAvail')?.value?.trim() || '',
+      discount: document.getElementById('discountPct')?.value?.trim() || '',
+      origPrice: document.getElementById('origPrice')?.value?.trim() || '',
+      saleEnd: document.getElementById('saleEnd')?.value?.trim() || '',
+      service: document.getElementById('serviceName')?.value?.trim() || '',
+      turnaround: document.getElementById('turnaround')?.value?.trim() || '',
+    };
+
+    let message;
+    try {
+      message = await generateWithGroq(formData);
+    } catch(e){
+      // Fallback to template if Groq fails
+      console.warn('Groq failed, using template:', e);
+      generateMessage();
+      return;
+    }
+
+    // Build WhatsApp link
+    const waNum = document.getElementById('waNumber')?.value?.trim() || '';
+    const waLink = waNum ? `https://wa.me/${waNum}?text=${encodeURIComponent(message)}` : '';
+
+    // Show output
+    document.getElementById('salesMsg').textContent = message;
+    if(waLink){
+      document.getElementById('waLink').href = waLink;
+      document.getElementById('waLinkText').textContent = waLink;
+    }
+    document.getElementById('outputSection').style.display = 'block';
+    document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'nearest'});
+
+    // Update usage counter
+    usageCount--;
+    updateUsageDisplay();
+    gtag('event','message_generated_ai',{event_category:'engagement',event_label:type+'_'+style});
+
+  } catch(e){
+    showToast('Something went wrong. Try again.');
+    console.error(e);
+  }
+
+  ldr.classList.remove('show');
+  btn.style.display='';
+}
+
+/* ===== AI SMART REPLY WRAPPER ===== */
+async function generateReply(){
+  if(!srScenario){ showToast('Please select what the customer said'); return; }
+  const product = document.getElementById('sr-product').value.trim();
+  const price   = document.getElementById('sr-price').value.trim();
+  const loc     = document.getElementById('sr-location').value.trim();
+  const del     = document.getElementById('sr-delivery').value.trim();
+  const pay     = document.getElementById('sr-payment').value.trim();
+  if(!product||!price||!loc||!del||!pay){
+    showToast('Please fill all required fields'); return;
+  }
+  const d = {
+    product, price, cur: document.getElementById('sr-currency').value,
+    location:loc, delivery:del, payment:pay,
+    discount: document.getElementById('sr-discount').value.trim(),
+    custom: document.getElementById('sr-custom') ? document.getElementById('sr-custom').value.trim() : ''
+  };
+  const btn = document.getElementById('srBtn');
+  const ldr = document.getElementById('sr-loader');
+  btn.style.display='none'; ldr.classList.add('show');
+
+  try {
+    let reply;
+    try {
+      reply = await generateReplyWithGroq(srScenario, d);
+    } catch(e){
+      console.warn('Groq failed, using template:', e);
+      reply = buildReply(srScenario, d);
+    }
+    document.getElementById('srMsg').textContent = reply;
+    document.getElementById('srOutput').classList.add('show');
+    gtag('event','smart_reply_generated_ai',{event_category:'engagement',event_label:srScenario});
+    document.getElementById('srOutput').scrollIntoView({behavior:'smooth',block:'nearest'});
+  } catch(e){
+    showToast('Something went wrong. Try again.');
+  }
+  ldr.classList.remove('show'); btn.style.display='';
+}
 
 /* Count-up on scroll */
 (function(){
