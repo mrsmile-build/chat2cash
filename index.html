@@ -675,55 +675,32 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .suite-brand-sub{font-size:9px;color:#3a5040;font-family:'DM Sans',sans-serif;letter-spacing:0.04em;}
 
 
-/* ===== IMAGE UPLOAD ===== */
-.img-upload-zone{
-  border:2px dashed rgba(37,211,102,0.25);
-  border-radius:16px;
-  padding:24px 20px;
-  text-align:center;
-  cursor:pointer;
-  transition:all .2s;
-  background:rgba(37,211,102,0.03);
-  margin-bottom:14px;
-  position:relative;
-}
-.img-upload-zone:hover,.img-upload-zone.drag{
-  border-color:rgba(37,211,102,0.5);
-  background:rgba(37,211,102,0.07);
-}
-.img-upload-zone input[type=file]{
-  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
-}
-.img-upload-icon{font-size:36px;margin-bottom:8px;}
-.img-upload-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
-.img-upload-sub{font-size:12px;color:var(--muted);}
-.img-preview-wrap{display:none;margin-bottom:14px;}
-.img-preview-wrap.show{display:block;}
-.img-preview{
-  width:100%;max-height:200px;object-fit:cover;
-  border-radius:12px;border:1px solid var(--border);
-}
-.img-preview-actions{display:flex;gap:8px;margin-top:8px;}
-.img-preview-link{
-  flex:1;padding:10px;background:var(--glow);
-  border:1px solid rgba(37,211,102,0.25);
-  border-radius:10px;font-size:12px;color:var(--green);
-  word-break:break-all;text-decoration:none;
-  display:flex;align-items:center;gap:6px;
-}
-.img-remove-btn{
-  padding:10px 14px;background:rgba(255,80,80,0.08);
-  border:1px solid rgba(255,80,80,0.2);
-  border-radius:10px;font-size:12px;color:#ff6b6b;
-  cursor:pointer;white-space:nowrap;
-}
-.img-uploading{
-  display:none;align-items:center;gap:10px;
-  padding:12px;background:var(--card);
-  border:1px solid var(--border);border-radius:12px;
-  font-size:13px;color:var(--muted);margin-bottom:14px;
-}
-.img-uploading.show{display:flex;}
+/* ===== FILE/IMAGE UPLOAD ===== */
+.upload-section{margin:14px 0;}
+.upload-tabs{display:flex;gap:8px;margin-bottom:10px;}
+.upload-tab{flex:1;padding:8px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;font-size:12px;font-weight:700;color:var(--muted);transition:all .2s;font-family:'DM Sans',sans-serif;}
+.upload-tab.active{background:var(--glow);border-color:rgba(37,211,102,.4);color:var(--green);}
+.upload-drop{border:2px dashed rgba(37,211,102,0.2);border-radius:14px;padding:18px 16px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(37,211,102,0.02);position:relative;}
+.upload-drop:hover,.upload-drop.drag{border-color:rgba(37,211,102,0.5);background:rgba(37,211,102,0.06);}
+.upload-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-drop-icon{font-size:28px;margin-bottom:6px;}
+.upload-drop-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.upload-drop-sub{font-size:11px;color:var(--muted);}
+.upload-result{display:none;margin-top:10px;}
+.upload-result.show{display:block;}
+.upload-preview{width:100%;max-height:160px;object-fit:cover;border-radius:10px;border:1px solid var(--border);margin-bottom:8px;}
+.upload-file-preview{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;}
+.upload-file-icon{font-size:28px;flex-shrink:0;}
+.upload-file-name{font-size:12px;color:var(--text);flex:1;word-break:break-all;}
+.upload-link-row{display:flex;gap:8px;align-items:center;}
+.upload-link{flex:1;padding:9px 12px;background:var(--glow);border:1px solid rgba(37,211,102,.25);border-radius:10px;font-size:11px;color:var(--green);word-break:break-all;text-decoration:none;}
+.upload-remove{padding:9px 12px;background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.2);border-radius:10px;font-size:12px;color:#ff6b6b;cursor:pointer;white-space:nowrap;}
+.upload-status{display:none;align-items:center;gap:10px;padding:11px;background:var(--card);border:1px solid var(--border);border-radius:10px;font-size:13px;color:var(--muted);margin-top:8px;}
+.upload-status.show{display:flex;}
+/* keep old classes working */
+.img-upload-zone{display:none;}
+.img-uploading{display:none;}
+.img-preview-wrap{display:none;}
 
 </style>
 </head>
@@ -853,6 +830,44 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
       <!-- SINGLE -->
       <div id="fields-single">
         <div class="field"><label>Product Name *</label><input type="text" id="sp-product" placeholder="e.g. Brightening Body Cream, Ankara Gown, Waist Trainer" /></div>
+
+        <!-- PRODUCT IMAGE / FILE UPLOAD -->
+        <div class="field">
+          <label>Product Photo or File <span class="opt">(Optional — link added to message)</span></label>
+          <div class="upload-section">
+            <div class="upload-tabs">
+              <div class="upload-tab active" id="utab-image" onclick="switchUploadTab('image')">📷 Photo</div>
+              <div class="upload-tab" id="utab-file" onclick="switchUploadTab('file')">📄 File / PDF</div>
+            </div>
+            <div id="upload-image-zone" class="upload-drop">
+              <input type="file" id="imgFileInput" accept="image/*" onchange="handleUpload(this,'image')" />
+              <div class="upload-drop-icon">📷</div>
+              <div class="upload-drop-title">Tap to upload product photo</div>
+              <div class="upload-drop-sub">JPG · PNG · WEBP · Max 5MB · Free hosting</div>
+            </div>
+            <div id="upload-file-zone" class="upload-drop" style="display:none">
+              <input type="file" id="docFileInput" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
+              <div class="upload-drop-icon">📄</div>
+              <div class="upload-drop-title">Tap to upload file or PDF</div>
+              <div class="upload-drop-sub">PDF · DOC · TXT · Max 5MB · Free hosting</div>
+            </div>
+            <div class="upload-status" id="uploadStatus">
+              <div class="spin"></div> <span id="uploadStatusText">Uploading...</span>
+            </div>
+            <div class="upload-result" id="uploadResult">
+              <img src="" alt="Preview" class="upload-preview" id="uploadImgPreview" style="display:none" />
+              <div class="upload-file-preview" id="uploadFilePreview" style="display:none">
+                <div class="upload-file-icon">📄</div>
+                <div class="upload-file-name" id="uploadFileName">file.pdf</div>
+              </div>
+              <div class="upload-link-row">
+                <a href="#" class="upload-link" id="uploadLink" target="_blank">🔗 <span id="uploadLinkText">Link ready — added to your message</span></a>
+                <button class="upload-remove" onclick="removeUpload()">✕ Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="field"><label>Quantity / Size <span class="opt">(Optional)</span></label><input type="text" id="sp-qty" placeholder="e.g. 500ml, 1 pair, 1kg pack" /></div>
         <div class="row-2">
           <div class="field"><label>Price *</label><input type="text" id="sp-price" placeholder="e.g. 5000" /></div>
@@ -908,7 +923,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
       </div>
 
       <div class="loader" id="loader"><div class="spin"></div> Crafting your sales weapon...</div>
-      <button class="btn-gen" id="genBtn" onclick="generate()">⚡ Generate Sales Message + WhatsApp Link</button>
+      <button class="btn-gen" id="genBtn" onclick="generateMessageAI()">⚡ Generate Sales Message + WhatsApp Link</button>
     </div>
 
     <!-- OUTPUT -->
@@ -1772,44 +1787,69 @@ function srNativeShare(){
 /* ===== BACKEND CONFIG ===== */
 const BACKEND = 'https://chat2cash.onrender.com';
 
-/* ===== IMAGE UPLOAD ===== */
-let uploadedImageUrl = '';
+/* ===== FILE/IMAGE UPLOAD — calls backend /upload-image ===== */
+let uploadedFileUrl = '';
+let currentUploadTab = 'image';
 
-async function handleImageUpload(input){
+function switchUploadTab(tab){
+  currentUploadTab = tab;
+  document.getElementById('utab-image').className = 'upload-tab' + (tab==='image'?' active':'');
+  document.getElementById('utab-file').className = 'upload-tab' + (tab==='file'?' active':'');
+  document.getElementById('upload-image-zone').style.display = tab==='image'?'':'none';
+  document.getElementById('upload-file-zone').style.display = tab==='file'?'':'none';
+}
+
+async function handleUpload(input, type){
   const file = input.files[0];
   if(!file) return;
-  if(file.size > 5*1024*1024){ showToast('Image too large. Max 5MB.'); return; }
+  if(file.size > 5*1024*1024){ showToast('File too large. Max 5MB.'); return; }
 
-  document.getElementById('imgUploading').classList.add('show');
-  document.getElementById('imgUploadZone').style.display = 'none';
+  const statusEl = document.getElementById('uploadStatus');
+  const statusText = document.getElementById('uploadStatusText');
+  statusEl.classList.add('show');
+  statusText.textContent = type==='image' ? 'Uploading photo...' : 'Uploading file...';
 
   try {
     const base64 = await toBase64(file);
     const b64data = base64.split(',')[1];
 
+    /* Call Render backend — keys are safe on server */
     const res = await fetch(`${BACKEND}/upload-image`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({image: b64data})
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({image: b64data, filename: file.name, type: type})
     });
+
+    if(!res.ok) throw new Error('Upload failed');
     const data = await res.json();
 
     if(data.url){
-      uploadedImageUrl = data.url;
-      document.getElementById('imgPreview').src = uploadedImageUrl;
-      document.getElementById('imgLink').href = uploadedImageUrl;
-      document.getElementById('imgLinkText').textContent = uploadedImageUrl;
-      document.getElementById('imgPreviewWrap').classList.add('show');
-      showToast('Image uploaded successfully!');
-      gtag('event','image_uploaded',{event_category:'engagement'});
+      uploadedFileUrl = data.url;
+
+      if(type==='image'){
+        document.getElementById('uploadImgPreview').src = data.url;
+        document.getElementById('uploadImgPreview').style.display = 'block';
+        document.getElementById('uploadFilePreview').style.display = 'none';
+      } else {
+        document.getElementById('uploadFileName').textContent = file.name;
+        document.getElementById('uploadFilePreview').style.display = 'flex';
+        document.getElementById('uploadImgPreview').style.display = 'none';
+      }
+
+      document.getElementById('uploadLink').href = data.url;
+      document.getElementById('uploadLinkText').textContent = '✅ Link ready — will be added to your message';
+      document.getElementById('uploadResult').classList.add('show');
+
+      showToast(type==='image' ? 'Photo uploaded! Link will be in your message.' : 'File uploaded! Link will be in your message.');
+      gtag('event','file_uploaded',{event_category:'engagement',event_label:type});
     } else {
-      throw new Error('Upload failed');
+      throw new Error(data.error || 'Upload failed');
     }
   } catch(e){
-    showToast('Image upload failed. Try again.');
-    document.getElementById('imgUploadZone').style.display = '';
+    console.error('Upload error:', e);
+    showToast('Upload failed. Check your connection and try again.');
   }
-  document.getElementById('imgUploading').classList.remove('show');
+  statusEl.classList.remove('show');
 }
 
 function toBase64(file){
@@ -1821,11 +1861,14 @@ function toBase64(file){
   });
 }
 
-function removeImage(){
-  uploadedImageUrl = '';
-  document.getElementById('imgPreviewWrap').classList.remove('show');
-  document.getElementById('imgUploadZone').style.display = '';
+function removeUpload(){
+  uploadedFileUrl = '';
+  document.getElementById('uploadResult').classList.remove('show');
+  document.getElementById('uploadImgPreview').style.display = 'none';
+  document.getElementById('uploadFilePreview').style.display = 'none';
   document.getElementById('imgFileInput').value = '';
+  document.getElementById('docFileInput').value = '';
+  showToast('File removed.');
 }
 
 /* ===== GROQ AI MESSAGE GENERATION ===== */
@@ -1878,7 +1921,7 @@ Rules:
         end: formData.saleEnd,
         original: formData.origPrice,
       },
-      imageUrl: uploadedImageUrl || ''
+      imageUrl: uploadedFileUrl || ''
     })
   });
 
