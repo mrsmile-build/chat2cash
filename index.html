@@ -2005,22 +2005,21 @@ async function generateMessageAI(){
       throw new Error('Backend error');
     }
 
-    // Use existing display logic
+    // Use exact same display logic as original generate()
     const link = buildLink(v('waNumber'), d.cur || '₦', msg);
     document.getElementById('salesMsg').textContent = msg;
     document.getElementById('linkBox').textContent = link;
     document.getElementById('waBtn').href = link;
     const chip = document.getElementById('styleChip');
     chip.textContent = mode==='fire' ? 'Nigerian Fire' : 'Global Pro';
-    chip.className = 'style-chip ' + (mode==='fire' ? 'fire' : 'global');
-    document.getElementById('outputSection').classList.add('show');
-    document.getElementById('outputSection').scrollIntoView({behavior:'smooth', block:'nearest'});
-    
-    // Update usage
-    usage.count++;
-    localStorage.setItem(USAGE_KEY, JSON.stringify(usage));
-    updateUsage();
+    chip.className = 'style-chip ' + (mode==='fire' ? 'chip-fire' : 'chip-global');
+    document.getElementById('formCard').style.display = 'none';
+    document.querySelector('.toggle-card').style.display = 'none';
+    document.querySelector('.type-card').style.display = 'none';
+    document.getElementById('outputSection').style.display = 'block';
+    usage.count++; saveUsage(usage); refreshCount();
     gtag('event','message_generated_ai',{event_category:'engagement',event_label:msgType+'_'+mode});
+    window.scrollTo({top:document.getElementById('tool').offsetTop-80,behavior:'smooth'});
 
   } catch(e){
     console.warn('AI failed, using template fallback:', e);
