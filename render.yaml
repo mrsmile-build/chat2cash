@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: chat2cash
+    env: python
+    startCommand: gunicorn app:app --timeout 120 --workers 1
+    plan: free
