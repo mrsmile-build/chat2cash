@@ -1735,35 +1735,6 @@ Is there anything else you would like to know? I am here to help you get exactly
 }
 
 /* ===== GENERATE REPLY ===== */
-function generateReply(){
-  if(!srScenario){ showToast('Please select what the customer said'); return; }
-  const product = document.getElementById('sr-product').value.trim();
-  const price   = document.getElementById('sr-price').value.trim();
-  const loc     = document.getElementById('sr-location').value.trim();
-  const del     = document.getElementById('sr-delivery').value.trim();
-  const pay     = document.getElementById('sr-payment').value.trim();
-  if(!product || !price || !loc || !del || !pay){
-    showToast('Please fill all required fields');
-    return;
-  }
-  const d = {
-    product, price, cur: document.getElementById('sr-currency').value,
-    location: loc, delivery: del, payment: pay,
-    discount: document.getElementById('sr-discount').value.trim(),
-    custom: document.getElementById('sr-custom') ? document.getElementById('sr-custom').value.trim() : ''
-  };
-  const btn = document.getElementById('srBtn');
-  const ldr = document.getElementById('sr-loader');
-  btn.style.display='none'; ldr.classList.add('show');
-  setTimeout(()=>{
-    const reply = buildReply(srScenario, d);
-    document.getElementById('srMsg').textContent = reply;
-    document.getElementById('srOutput').classList.add('show');
-    ldr.classList.remove('show'); btn.style.display='';
-    gtag('event','smart_reply_generated',{event_category:'engagement',event_label:srScenario});
-    document.getElementById('srOutput').scrollIntoView({behavior:'smooth', block:'nearest'});
-  }, 900);
-}
 
 function resetSmartReply(){
   document.getElementById('srOutput').classList.remove('show');
@@ -1988,69 +1959,74 @@ Rules:
 
 /* ===== AI MESSAGE GENERATION WRAPPER ===== */
 async function generateMessageAI(){
-  // Collect all form data
-  const type = document.querySelector('.type-card.active')?.dataset?.type || 'single';
-  const style = document.querySelector('.style-card.active')?.dataset?.style || 'fire';
-  const currency = document.querySelector('#currency')?.value || '₦';
+  // Use existing validation and form data functions
+  const usage = getUsage();
+  if(usage.count >= LIMIT){ document.getElementById('limitModal').classList.add('show'); return; }
+  if(!validate()){ shake(); return; }
 
-  // Validate required fields first using existing validation
-  const valid = validateForm();
-  if(!valid) return;
-
+  const d = getFormData();
   const btn = document.getElementById('genBtn');
-  const ldr = document.getElementById('genLoader');
+  const ldr = document.getElementById('loader');
   btn.style.display='none';
   ldr.classList.add('show');
 
+  // Build form data for backend using existing getFormData()
+  const formData = {
+    product: d.product || d.service || d.collection || '',
+    cur: d.cur || '₦',
+    price: d.price || '',
+    target: d.target || d.client || '',
+    benefit: d.benefit || '',
+    speed: d.speed || '',
+    qty: d.qty || '',
+    discount: d.discount || '',
+    end: d.end || '',
+    original: d.original || '',
+  };
+
   try {
-    const formData = {
-      type, style, currency,
-      product: document.getElementById('productName')?.value?.trim() || '',
-      price: document.getElementById('price')?.value?.trim() || '',
-      target: document.getElementById('targetCustomer')?.value?.trim() || '',
-      benefit: document.getElementById('mainBenefit')?.value?.trim() || '',
-      delivery: document.getElementById('deliverySpeed')?.value?.trim() || '',
-      qty: document.getElementById('qtySize')?.value?.trim() || '',
-      collection: document.getElementById('collectionName')?.value?.trim() || '',
-      pieces: document.getElementById('piecesAvail')?.value?.trim() || '',
-      discount: document.getElementById('discountPct')?.value?.trim() || '',
-      origPrice: document.getElementById('origPrice')?.value?.trim() || '',
-      saleEnd: document.getElementById('saleEnd')?.value?.trim() || '',
-      service: document.getElementById('serviceName')?.value?.trim() || '',
-      turnaround: document.getElementById('turnaround')?.value?.trim() || '',
-    };
+    // Try AI first via backend
+    const res = await fetch(`${BACKEND}/generate`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        msgType: msgType,
+        style: mode,
+        formData: formData,
+        imageUrl: uploadedFileUrl || ''
+      })
+    });
 
-    let message;
-    try {
-      message = await generateWithGroq(formData);
-    } catch(e){
-      // Fallback to template if Groq fails
-      console.warn('Groq failed, using template:', e);
-      generateMessage();
-      return;
+    let msg;
+    if(res.ok){
+      const data = await res.json();
+      msg = data.message;
+    } else {
+      throw new Error('Backend error');
     }
 
-    // Build WhatsApp link
-    const waNum = document.getElementById('waNumber')?.value?.trim() || '';
-    const waLink = waNum ? `https://wa.me/${waNum}?text=${encodeURIComponent(message)}` : '';
-
-    // Show output
-    document.getElementById('salesMsg').textContent = message;
-    if(waLink){
-      document.getElementById('waLink').href = waLink;
-      document.getElementById('waLinkText').textContent = waLink;
-    }
-    document.getElementById('outputSection').style.display = 'block';
-    document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'nearest'});
-
-    // Update usage counter
-    usageCount--;
-    updateUsageDisplay();
-    gtag('event','message_generated_ai',{event_category:'engagement',event_label:type+'_'+style});
+    // Use existing display logic
+    const link = buildLink(v('waNumber'), d.cur || '₦', msg);
+    document.getElementById('salesMsg').textContent = msg;
+    document.getElementById('linkBox').textContent = link;
+    document.getElementById('waBtn').href = link;
+    const chip = document.getElementById('styleChip');
+    chip.textContent = mode==='fire' ? 'Nigerian Fire' : 'Global Pro';
+    chip.className = 'style-chip ' + (mode==='fire' ? 'fire' : 'global');
+    document.getElementById('outputSection').classList.add('show');
+    document.getElementById('outputSection').scrollIntoView({behavior:'smooth', block:'nearest'});
+    
+    // Update usage
+    usage.count++;
+    localStorage.setItem(USAGE_KEY, JSON.stringify(usage));
+    updateUsage();
+    gtag('event','message_generated_ai',{event_category:'engagement',event_label:msgType+'_'+mode});
 
   } catch(e){
-    showToast('Something went wrong. Try again.');
-    console.error(e);
+    console.warn('AI failed, using template fallback:', e);
+    // Fallback to existing template system
+    generate();
+    return;
   }
 
   ldr.classList.remove('show');
@@ -2081,14 +2057,22 @@ async function generateReply(){
   try {
     let reply;
     try {
-      reply = await generateReplyWithGroq(srScenario, d);
+      /* Call backend — keys are safe on Render server */
+      const res = await fetch(`${BACKEND}/smart-reply`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({scenario: srScenario, details: d})
+      });
+      if(!res.ok) throw new Error('Backend error');
+      const data = await res.json();
+      reply = data.reply;
     } catch(e){
-      console.warn('Groq failed, using template:', e);
+      console.warn('Backend failed, using template:', e);
       reply = buildReply(srScenario, d);
     }
     document.getElementById('srMsg').textContent = reply;
     document.getElementById('srOutput').classList.add('show');
-    gtag('event','smart_reply_generated_ai',{event_category:'engagement',event_label:srScenario});
+    gtag('event','smart_reply_ai',{event_category:'engagement',event_label:srScenario});
     document.getElementById('srOutput').scrollIntoView({behavior:'smooth',block:'nearest'});
   } catch(e){
     showToast('Something went wrong. Try again.');
