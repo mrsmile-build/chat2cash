@@ -923,7 +923,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
       </div>
 
       <div class="loader" id="loader"><div class="spin"></div> Crafting your sales weapon...</div>
-      <button class="btn-gen" id="genBtn" onclick="generateMessageAI()">⚡ Generate Sales Message + WhatsApp Link</button>
+      <button class="btn-gen" id="genBtn" onclick="generate()">⚡ Generate Sales Message + WhatsApp Link</button>
     </div>
 
     <!-- OUTPUT -->
@@ -1473,7 +1473,49 @@ function generate(){
     usage.count++;saveUsage(usage);refreshCount();
     gtag('event','message_generated',{event_category:'engagement',event_label:mode+'_'+msgType});
     window.scrollTo({top:document.getElementById('tool').offsetTop-80,behavior:'smooth'});
+    /* Silently upgrade to AI message in background */
+    upgradeWithAI(d, msg);
   },1100);
+}
+
+async function upgradeWithAI(d, templateMsg){
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(()=>controller.abort(), 12000);
+    const res = await fetch(`${BACKEND}/generate`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      signal: controller.signal,
+      body: JSON.stringify({
+        msgType: msgType,
+        style: mode,
+        formData: {
+          product: d.product||d.service||d.collection||'',
+          cur: d.cur||'₦',
+          price: d.price||'',
+          target: d.target||d.client||'',
+          benefit: d.benefit||'',
+          speed: d.speed||'',
+          qty: d.qty||'',
+          discount: d.discount||'',
+          end: d.end||'',
+          original: d.original||''
+        },
+        imageUrl: uploadedFileUrl||''
+      })
+    });
+    clearTimeout(timeout);
+    if(res.ok){
+      const data = await res.json();
+      if(data.message && data.message.trim()){
+        document.getElementById('salesMsg').textContent = data.message;
+        const link = buildLink(v('waNumber'), d.cur||'₦', data.message);
+        document.getElementById('linkBox').textContent = link;
+        document.getElementById('waBtn').href = link;
+        showToast('AI message ready ✨');
+      }
+    }
+  } catch(e){ /* silent fail - template message stays */ }
 }
 
 function doCopy(id,btn){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{btn.textContent='Copied!';btn.classList.add('ok');showToast('Message copied to clipboard');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('ok');},2000);});}
