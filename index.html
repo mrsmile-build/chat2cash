@@ -880,7 +880,43 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 
       <!-- COLLECTION -->
       <div id="fields-collection" class="hidden">
-        <div class="field"><label>Collection Name *</label><input type="text" id="col-name" placeholder="e.g. Summer Ankara Collection, New Arrivals Vol 3" /></div>
+        
+        <div class="field">
+          <label>Product Photo or File <span class="opt">(Optional — link added to message)</span></label>
+          <div class="upload-section">
+            <div class="upload-tabs">
+              <div class="upload-tab active" onclick="switchUploadTab('image')">📷 Photo</div>
+              <div class="upload-tab" onclick="switchUploadTab('file')">📄 File/PDF</div>
+            </div>
+            <div id="upload-image-zone2" class="upload-drop">
+              <input type="file" id="imgFileInput2" accept="image/*" onchange="handleUpload(this,'image')" />
+              <div class="upload-drop-icon">📷</div>
+              <div class="upload-drop-title">Tap to upload product photo</div>
+              <div class="upload-drop-sub">JPG · PNG · Max 5MB · Free hosting</div>
+            </div>
+            <div id="upload-file-zone2" class="upload-drop" style="display:none">
+              <input type="file" id="docFileInput2" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
+              <div class="upload-drop-icon">📄</div>
+              <div class="upload-drop-title">Tap to upload file or PDF</div>
+              <div class="upload-drop-sub">PDF · DOC · TXT · Max 5MB · Free hosting</div>
+            </div>
+            <div class="upload-status" id="uploadStatus2">
+              <div class="spin"></div> <span id="uploadStatusText2">Uploading...</span>
+            </div>
+            <div class="upload-result" id="uploadResult2">
+              <img src="" alt="Preview" class="upload-preview" id="uploadImgPreview2" style="display:none" />
+              <div class="upload-file-preview" id="uploadFilePreview2" style="display:none">
+                <div class="upload-file-icon">📄</div>
+                <div class="upload-file-name" id="uploadFileName2">file.pdf</div>
+              </div>
+              <div class="upload-link-row">
+                <a href="#" class="upload-link" id="uploadLink2" target="_blank">🔗 <span id="uploadLinkText2">Link ready — added to your message</span></a>
+                <button class="upload-remove" onclick="removeUpload()">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+<div class="field"><label>Collection Name *</label><input type="text" id="col-name" placeholder="e.g. Summer Ankara Collection, New Arrivals Vol 3" /></div>
         <div class="row-2">
           <div class="field"><label>Price Range *</label><input type="text" id="col-price" placeholder="e.g. 8,000 - 25,000" /></div>
           <div class="field"><label>Currency</label><select id="col-currency"><option value="₦">₦ Nigeria</option><option value="$">$ USD</option><option value="£">£ UK</option><option value="KSh">KSh Kenya</option><option value="GH₵">GH₵ Ghana</option><option value="R">R South Africa</option><option value="€">€ Euro</option><option value="₹">₹ India</option></select></div>
@@ -892,7 +928,43 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 
       <!-- CLEARANCE -->
       <div id="fields-clearance" class="hidden">
-        <div class="field"><label>Product / Category *</label><input type="text" id="cl-product" placeholder="e.g. All footwear, Selected dresses, Electronics" /></div>
+        
+        <div class="field">
+          <label>Product Photo or File <span class="opt">(Optional — link added to message)</span></label>
+          <div class="upload-section">
+            <div class="upload-tabs">
+              <div class="upload-tab active" onclick="switchUploadTab('image')">📷 Photo</div>
+              <div class="upload-tab" onclick="switchUploadTab('file')">📄 File/PDF</div>
+            </div>
+            <div id="upload-image-zone3" class="upload-drop">
+              <input type="file" id="imgFileInput3" accept="image/*" onchange="handleUpload(this,'image')" />
+              <div class="upload-drop-icon">📷</div>
+              <div class="upload-drop-title">Tap to upload product photo</div>
+              <div class="upload-drop-sub">JPG · PNG · Max 5MB · Free hosting</div>
+            </div>
+            <div id="upload-file-zone3" class="upload-drop" style="display:none">
+              <input type="file" id="docFileInput3" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
+              <div class="upload-drop-icon">📄</div>
+              <div class="upload-drop-title">Tap to upload file or PDF</div>
+              <div class="upload-drop-sub">PDF · DOC · TXT · Max 5MB · Free hosting</div>
+            </div>
+            <div class="upload-status" id="uploadStatus3">
+              <div class="spin"></div> <span id="uploadStatusText3">Uploading...</span>
+            </div>
+            <div class="upload-result" id="uploadResult3">
+              <img src="" alt="Preview" class="upload-preview" id="uploadImgPreview3" style="display:none" />
+              <div class="upload-file-preview" id="uploadFilePreview3" style="display:none">
+                <div class="upload-file-icon">📄</div>
+                <div class="upload-file-name" id="uploadFileName3">file.pdf</div>
+              </div>
+              <div class="upload-link-row">
+                <a href="#" class="upload-link" id="uploadLink3" target="_blank">🔗 <span id="uploadLinkText3">Link ready — added to your message</span></a>
+                <button class="upload-remove" onclick="removeUpload()">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+<div class="field"><label>Product / Category *</label><input type="text" id="cl-product" placeholder="e.g. All footwear, Selected dresses, Electronics" /></div>
         <div class="row-2">
           <div class="field"><label>Discount *</label><input type="text" id="cl-discount" placeholder="e.g. 40% off, Buy 2 get 1 free" /></div>
           <div class="field"><label>Currency</label><select id="cl-currency"><option value="₦">₦ Nigeria</option><option value="$">$ USD</option><option value="£">£ UK</option><option value="KSh">KSh Kenya</option><option value="GH₵">GH₵ Ghana</option><option value="R">R South Africa</option><option value="€">€ Euro</option><option value="₹">₹ India</option></select></div>
@@ -904,7 +976,43 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 
       <!-- SERVICE -->
       <div id="fields-service" class="hidden">
-        <div class="field"><label>Service Name *</label><input type="text" id="sv-service" placeholder="e.g. Logo Design, Hair Fixing, Website Building" /></div>
+        
+        <div class="field">
+          <label>Product Photo or File <span class="opt">(Optional — link added to message)</span></label>
+          <div class="upload-section">
+            <div class="upload-tabs">
+              <div class="upload-tab active" onclick="switchUploadTab('image')">📷 Photo</div>
+              <div class="upload-tab" onclick="switchUploadTab('file')">📄 File/PDF</div>
+            </div>
+            <div id="upload-image-zone4" class="upload-drop">
+              <input type="file" id="imgFileInput4" accept="image/*" onchange="handleUpload(this,'image')" />
+              <div class="upload-drop-icon">📷</div>
+              <div class="upload-drop-title">Tap to upload product photo</div>
+              <div class="upload-drop-sub">JPG · PNG · Max 5MB · Free hosting</div>
+            </div>
+            <div id="upload-file-zone4" class="upload-drop" style="display:none">
+              <input type="file" id="docFileInput4" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
+              <div class="upload-drop-icon">📄</div>
+              <div class="upload-drop-title">Tap to upload file or PDF</div>
+              <div class="upload-drop-sub">PDF · DOC · TXT · Max 5MB · Free hosting</div>
+            </div>
+            <div class="upload-status" id="uploadStatus4">
+              <div class="spin"></div> <span id="uploadStatusText4">Uploading...</span>
+            </div>
+            <div class="upload-result" id="uploadResult4">
+              <img src="" alt="Preview" class="upload-preview" id="uploadImgPreview4" style="display:none" />
+              <div class="upload-file-preview" id="uploadFilePreview4" style="display:none">
+                <div class="upload-file-icon">📄</div>
+                <div class="upload-file-name" id="uploadFileName4">file.pdf</div>
+              </div>
+              <div class="upload-link-row">
+                <a href="#" class="upload-link" id="uploadLink4" target="_blank">🔗 <span id="uploadLinkText4">Link ready — added to your message</span></a>
+                <button class="upload-remove" onclick="removeUpload()">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+<div class="field"><label>Service Name *</label><input type="text" id="sv-service" placeholder="e.g. Logo Design, Hair Fixing, Website Building" /></div>
         <div class="row-2">
           <div class="field"><label>Starting Price *</label><input type="text" id="sv-price" placeholder="e.g. 15,000" /></div>
           <div class="field"><label>Currency</label><select id="sv-currency"><option value="₦">₦ Nigeria</option><option value="$">$ USD</option><option value="£">£ UK</option><option value="KSh">KSh Kenya</option><option value="GH₵">GH₵ Ghana</option><option value="R">R South Africa</option><option value="€">€ Euro</option><option value="₹">₹ India</option></select></div>
@@ -997,6 +1105,87 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
           </button>
         </div>
       </div>
+
+
+    <!-- SMART REPLY SECTION -->
+    <div id="smartReplySection" style="display:none">
+      <div class="form-card">
+        <div class="sec-head"><div class="sec-num">1</div><div class="sec-ttl">What did the customer say?</div></div>
+        <div class="field">
+          <label>Select the situation *</label>
+          <div class="reply-scenarios" id="scenarioGroup">
+            <div class="scenario-chip" onclick="selectScenario(this,'price')">💰 Asking to reduce price</div>
+            <div class="scenario-chip" onclick="selectScenario(this,'location')">📍 Asking your location</div>
+            <div class="scenario-chip" onclick="selectScenario(this,'delivery')">🚚 Asking about delivery</div>
+            <div class="scenario-chip" onclick="selectScenario(this,'original')">✅ Is it original?</div>
+            <div class="scenario-chip" onclick="selectScenario(this,'payment')">💳 Payment method?</div>
+            <div class="scenario-chip" onclick="selectScenario(this,'interested')">🙋 Said they are interested</div>
+            <div class="scenario-chip" onclick="selectScenario(this,'thinking')">🤔 Let me think about it</div>
+            <div class="scenario-chip" onclick="selectScenario(this,'custom')">✏️ Type my own</div>
+          </div>
+        </div>
+        <div class="field" id="customMsgField" style="display:none">
+          <label>What did the customer say? *</label>
+          <textarea id="sr-custom" class="fb-textarea" placeholder="e.g. Abeg reduce the price small" rows="3"></textarea>
+        </div>
+        <div class="divider"></div>
+        <div class="sec-head"><div class="sec-num">2</div><div class="sec-ttl">Your Business Details</div></div>
+        <div class="field">
+          <label>Product / Service *</label>
+          <input type="text" id="sr-product" placeholder="e.g. Brightening Body Cream, Logo Design" />
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label>Your Price *</label>
+            <input type="text" id="sr-price" placeholder="e.g. 3500" />
+          </div>
+          <div class="field">
+            <label>Currency</label>
+            <select id="sr-currency">
+              <option value="₦">₦ Nigeria</option>
+              <option value="$">$ USD</option>
+              <option value="£">£ UK</option>
+              <option value="KSh">KSh Kenya</option>
+              <option value="GH₵">GH₵ Ghana</option>
+              <option value="R">R South Africa</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Your Location *</label>
+          <input type="text" id="sr-location" placeholder="e.g. Ikeja Lagos, Accra Ghana" />
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label>Delivery Options *</label>
+            <input type="text" id="sr-delivery" placeholder="e.g. Same day Lagos, 3 days nationwide" />
+          </div>
+          <div class="field">
+            <label>Payment Methods *</label>
+            <input type="text" id="sr-payment" placeholder="e.g. Bank transfer, Opay, Cash" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Discount flexibility? <span class="opt">(Optional)</span></label>
+          <input type="text" id="sr-discount" placeholder="e.g. Max 200 off, No discount, Free delivery instead" />
+        </div>
+        <div class="loader" id="sr-loader"><div class="spin"></div> Crafting your reply...</div>
+        <button class="btn-gen" id="srBtn" onclick="generateReply()">💬 Generate Smart Reply</button>
+      </div>
+
+      <div class="sr-out-card" id="srOutput">
+        <div class="out-top">
+          <h3>💬 Your Smart Reply</h3>
+          <button class="btn-copy" onclick="doCopy('srMsg',this)">Copy</button>
+        </div>
+        <div class="out-msg" id="srMsg"></div>
+        <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="share-btn wa" onclick="srShareWA()" style="font-size:12px;padding:9px 14px;">Send via WhatsApp</button>
+          <button class="share-btn native" onclick="srNativeShare()" style="font-size:12px;padding:9px 14px;">📤 More apps</button>
+        </div>
+        <button class="btn-reset" style="margin-top:10px" onclick="resetSmartReply()">← Reply to another message</button>
+      </div>
+    </div><!-- /smartReplySection -->
 
       <!-- FEEDBACK -->
       <div class="feedback-box">
