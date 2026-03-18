@@ -1663,7 +1663,7 @@ function generate(){
     document.querySelector('.type-card').style.display='none';
     document.getElementById('outputSection').style.display='block';
     usage.count++;saveUsage(usage);refreshCount();
-    gtag('event','message_generated',{event_category:'engagement',event_label:mode+'_'+msgType});
+    if(typeof gtag !== 'undefined') gtag('event','message_generated',{event_category:'engagement',event_label:mode+'_'+msgType});
     window.scrollTo({top:document.getElementById('tool').offsetTop-80,behavior:'smooth'});
     /* Silently upgrade to AI message in background */
     upgradeWithAI(d, msg);
@@ -1753,18 +1753,18 @@ function shareToWhatsApp(){
   const msg = getGeneratedMessage();
   const url = 'https://wa.me/?text=' + encodeURIComponent(msg);
   window.open(url, '_blank');
-  gtag('event','share_whatsapp',{event_category:'sharing'});
+  if(typeof gtag !== 'undefined') gtag('event','share_whatsapp',{event_category:'sharing'});
 }
 function shareToFacebook(){
   const url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('https://mrsmile-build.github.io/chat2cash/');
   window.open(url, '_blank');
-  gtag('event','share_facebook',{event_category:'sharing'});
+  if(typeof gtag !== 'undefined') gtag('event','share_facebook',{event_category:'sharing'});
 }
 function shareToTelegram(){
   const msg = getGeneratedMessage();
   const url = 'https://t.me/share/url?url=mrsmile-build.github.io/chat2cash&text=' + encodeURIComponent(msg);
   window.open(url, '_blank');
-  gtag('event','share_telegram',{event_category:'sharing'});
+  if(typeof gtag !== 'undefined') gtag('event','share_telegram',{event_category:'sharing'});
 }
 function nativeShare(){
   const msg = getGeneratedMessage();
@@ -1773,7 +1773,7 @@ function nativeShare(){
       title:'Chat2Cash — My Sales Message',
       text: msg + '\n\nGenerated with Chat2Cash: mrsmile-build.github.io/chat2cash'
     });
-    gtag('event','share_native',{event_category:'sharing'});
+    if(typeof gtag !== 'undefined') gtag('event','share_native',{event_category:'sharing'});
   } else {
     navigator.clipboard.writeText(msg).then(()=>showToast('Message copied — now paste anywhere'));
   }
@@ -1783,7 +1783,7 @@ function shareApp(){
   const url='https://mrsmile-build.github.io/chat2cash/';
   if(navigator.share){navigator.share({title:'Chat2Cash',text:'Free tool that writes your WhatsApp sales message in seconds:',url});}
   else{navigator.clipboard.writeText(url).then(()=>showToast('Link copied! Now share it'));}
-  gtag('event','share_clicked',{event_category:'growth'});
+  if(typeof gtag !== 'undefined') gtag('event','share_clicked',{event_category:'growth'});
 }
 
 function closeModal(){document.getElementById('limitModal').classList.remove('show');}
@@ -1821,7 +1821,7 @@ function switchTab(tab){
     sr.style.cssText = 'display:block;min-height:500px;padding:4px';
     setTimeout(()=>sr.scrollIntoView({behavior:'smooth',block:'nearest'}), 150);
   }
-  if(typeof gtag !== 'undefined') gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
+  if(typeof gtag !== 'undefined') if(typeof gtag !== 'undefined') gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
 }
 
 /* ===== SCENARIO SELECTION ===== */
@@ -2050,7 +2050,7 @@ async function handleUpload(input, type){
       document.getElementById('uploadResult').classList.add('show');
 
       showToast(type==='image' ? 'Photo uploaded! Link will be in your message.' : 'File uploaded! Link will be in your message.');
-      gtag('event','file_uploaded',{event_category:'engagement',event_label:type});
+      if(typeof gtag !== 'undefined') gtag('event','file_uploaded',{event_category:'engagement',event_label:type});
     } else {
       throw new Error(data.error || 'Upload failed');
     }
@@ -2256,7 +2256,7 @@ async function generateMessageAI(){
     document.querySelector('.type-card').style.display = 'none';
     document.getElementById('outputSection').style.display = 'block';
     usage.count++; saveUsage(usage); refreshCount();
-    gtag('event','message_generated_ai',{event_category:'engagement',event_label:msgType+'_'+mode});
+    if(typeof gtag !== 'undefined') gtag('event','message_generated_ai',{event_category:'engagement',event_label:msgType+'_'+mode});
     window.scrollTo({top:document.getElementById('tool').offsetTop-80,behavior:'smooth'});
 
   } catch(e){
@@ -2309,7 +2309,7 @@ async function generateReply(){
     }
     document.getElementById('srMsg').textContent = reply;
     document.getElementById('srOutput').classList.add('show');
-    gtag('event','smart_reply_ai',{event_category:'engagement',event_label:srScenario});
+    if(typeof gtag !== 'undefined') gtag('event','smart_reply_ai',{event_category:'engagement',event_label:srScenario});
     document.getElementById('srOutput').scrollIntoView({behavior:'smooth',block:'nearest'});
   } catch(e){
     showToast('Something went wrong. Try again.');
