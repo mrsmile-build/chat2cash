@@ -511,7 +511,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .tool-tab-icon{font-size:20px;display:block;margin-bottom:4px;}
 
 /* ===== SMART REPLY ===== */
-#smartReplySection{display:none !important;padding:0 4px;}
+#smartReplySection{display:none;padding:0 4px;}
 #smartReplySection.active{display:block;animation:fu .35s ease both;}
 
 .reply-scenarios{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
@@ -1811,14 +1811,15 @@ function toggleFaq(btn){
 function switchTab(tab){
   document.getElementById('tab-generate').className = 'tool-tab' + (tab==='generate' ? ' active' : '');
   document.getElementById('tab-smartreply').className = 'tool-tab' + (tab==='smartreply' ? ' active' : '');
-  document.getElementById('generateSection').style.display = tab==='generate' ? '' : 'none';
+  const gs = document.getElementById('generateSection');
   const sr = document.getElementById('smartReplySection');
-  sr.style.setProperty('display', tab==='smartreply' ? 'block' : 'none', 'important');
-  sr.style.visibility = tab==='smartreply' ? 'visible' : 'hidden';
-  sr.className = tab==='smartreply' ? 'active' : '';
-  if(tab==='smartreply'){
-    sr.style.minHeight = '400px';
-    setTimeout(()=>sr.scrollIntoView({behavior:'smooth',block:'start'}), 100);
+  if(tab==='generate'){
+    gs.style.cssText = 'display:block';
+    sr.style.cssText = 'display:none';
+  } else {
+    gs.style.cssText = 'display:none';
+    sr.style.cssText = 'display:block;min-height:500px;padding:4px';
+    setTimeout(()=>sr.scrollIntoView({behavior:'smooth',block:'nearest'}), 150);
   }
   gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
 }
