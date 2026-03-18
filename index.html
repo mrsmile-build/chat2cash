@@ -1821,7 +1821,7 @@ function switchTab(tab){
     sr.style.cssText = 'display:block;min-height:500px;padding:4px';
     setTimeout(()=>sr.scrollIntoView({behavior:'smooth',block:'nearest'}), 150);
   }
-  gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
+  if(typeof gtag !== 'undefined') gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
 }
 
 /* ===== SCENARIO SELECTION ===== */
