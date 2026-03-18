@@ -511,7 +511,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .tool-tab-icon{font-size:20px;display:block;margin-bottom:4px;}
 
 /* ===== SMART REPLY ===== */
-#smartReplySection{display:none;}
+#smartReplySection{display:none;padding:0 4px;}
 #smartReplySection.active{display:block;animation:fu .35s ease both;}
 
 .reply-scenarios{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
@@ -1812,7 +1812,12 @@ function switchTab(tab){
   document.getElementById('generateSection').style.display = tab==='generate' ? '' : 'none';
   const sr = document.getElementById('smartReplySection');
   sr.style.display = tab==='smartreply' ? 'block' : 'none';
+  sr.style.visibility = tab==='smartreply' ? 'visible' : 'hidden';
   sr.className = tab==='smartreply' ? 'active' : '';
+  if(tab==='smartreply'){
+    sr.style.minHeight = '400px';
+    setTimeout(()=>sr.scrollIntoView({behavior:'smooth',block:'start'}), 100);
+  }
   gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
 }
 
