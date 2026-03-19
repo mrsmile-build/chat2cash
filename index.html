@@ -702,6 +702,32 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .img-uploading{display:none;}
 .img-preview-wrap{display:none;}
 
+
+/* ===== NAIJA STYLE TOGGLE ===== */
+.style-toggle{display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;}
+.style-toggle-label{font-size:13px;color:var(--muted);flex:1;}
+.toggle-pills{display:flex;gap:6px;}
+.toggle-pill{padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);color:var(--muted);background:none;transition:all .2s;font-family:"DM Sans",sans-serif;}
+.toggle-pill.active-en{background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.4);color:var(--green);}
+.toggle-pill.active-ng{background:rgba(255,214,10,0.12);border-color:rgba(255,214,10,0.4);color:#ffd60a;}
+.followup-chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.followup-chip{padding:10px 12px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;font-size:12.5px;color:var(--muted);text-align:center;transition:all .2s;line-height:1.4;}
+.followup-chip:hover{border-color:rgba(255,255,255,.18);color:var(--text);}
+.followup-chip.sel{background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.4);color:var(--green);}
+.fu-out-card{background:var(--card);border:1px solid rgba(37,211,102,.3);border-radius:18px;padding:20px;margin-top:12px;display:none;}
+.fu-out-card.show{display:block;}
+.status-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.status-type{padding:12px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;transition:all .2s;}
+.status-type:hover{border-color:rgba(255,255,255,.18);}
+.status-type.sel{background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.4);}
+.status-type-icon{font-size:24px;margin-bottom:4px;}
+.status-type-name{font-size:12px;font-weight:700;color:var(--text);}
+.status-type-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.status-out-card{background:var(--card);border:1px solid rgba(37,211,102,.3);border-radius:18px;padding:20px;margin-top:12px;display:none;}
+.status-out-card.show{display:block;}
+.status-preview{background:#0b1410;border-radius:12px;padding:16px;margin-bottom:14px;}
+.status-preview-text{font-size:14px;color:#e9edef;line-height:1.7;white-space:pre-wrap;}
+
 </style>
 </head>
 <body>
@@ -1392,6 +1418,107 @@ Reply ORDER now and I will sort you out</div></div>
     </div>
   </div>
 </section>
+
+
+
+    <!-- FOLLOW-UP GENERATOR -->
+    <div style="margin-top:40px;padding:0 4px;text-align:center;margin-bottom:24px">
+      <div class="sec-tag">Follow-Up</div>
+      <h2 class="sec-title" style="font-size:1.8rem;margin-top:10px">Customer Went Silent? <em>Follow Up Perfectly</em></h2>
+      <p class="sec-sub" style="margin-inline:auto">When a customer stops replying, use this to send the right follow-up message that brings them back without sounding desperate.</p>
+    </div>
+    <div id="followUpSection">
+      <div class="form-card">
+        <div class="sec-head"><div class="sec-num">1</div><div class="sec-ttl">What happened?</div></div>
+        <div class="field">
+          <label>Select the situation *</label>
+          <div class="followup-chips" id="followupGroup">
+            <div class="followup-chip" onclick="selectFollowup(this,'ghosted')">👻 Customer went silent</div>
+            <div class="followup-chip" onclick="selectFollowup(this,'interested')">🙋 Said interested, no order</div>
+            <div class="followup-chip" onclick="selectFollowup(this,'price')">💰 Complained about price</div>
+            <div class="followup-chip" onclick="selectFollowup(this,'pending')">⏳ Placed order, not paid</div>
+            <div class="followup-chip" onclick="selectFollowup(this,'viewed')">👁 Viewed status, no reply</div>
+            <div class="followup-chip" onclick="selectFollowup(this,'stockwarn')">🔥 Stock running out</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="sec-head"><div class="sec-num">2</div><div class="sec-ttl">Your Product Details</div></div>
+        <div class="field">
+          <label>Product / Service *</label>
+          <input type="text" id="fu-product" placeholder="e.g. Brightening Body Cream" />
+        </div>
+        <div class="row-2">
+          <div class="field"><label>Price *</label><input type="text" id="fu-price" placeholder="e.g. 3500" /></div>
+          <div class="field"><label>Currency</label><select id="fu-currency"><option value="&#8358;">&#8358; Nigeria</option><option value="$">$ USD</option><option value="&#163;">&#163; UK</option><option value="KSh">KSh Kenya</option><option value="GH&#8373;">GH&#8373; Ghana</option></select></div>
+        </div>
+        <div class="field">
+          <label>Reply Style</label>
+          <div class="style-toggle">
+            <div class="style-toggle-label">Choose your tone</div>
+            <div class="toggle-pills">
+              <button class="toggle-pill active-en" id="fu-eng" onclick="setFollowupStyle('english')">Professional</button>
+              <button class="toggle-pill" id="fu-naija" onclick="setFollowupStyle('naija')">&#127475;&#127468; Naija</button>
+            </div>
+          </div>
+        </div>
+        <div class="loader" id="fu-loader"><div class="spin"></div> Writing your follow-up...</div>
+        <button class="btn-gen" id="fuBtn" onclick="generateFollowUp()">&#128233; Generate Follow-Up Message</button>
+      </div>
+      <div class="fu-out-card" id="fuOutput">
+        <div class="out-top"><h3>&#128233; Your Follow-Up Message</h3><button class="btn-copy" onclick="doCopy('fuMsg',this)">Copy</button></div>
+        <div class="out-msg" id="fuMsg"></div>
+        <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="share-btn wa" onclick="fuShareWA()" style="font-size:12px;padding:9px 14px;">Send via WhatsApp</button>
+          <button class="share-btn native" onclick="fuNativeShare()" style="font-size:12px;padding:9px 14px;">&#128228; More apps</button>
+        </div>
+        <button class="btn-reset" style="margin-top:10px" onclick="resetFollowUp()">&#8592; Generate another</button>
+      </div>
+    </div>
+
+    <!-- WHATSAPP STATUS GENERATOR -->
+    <div style="margin-top:40px;padding:0 4px;text-align:center;margin-bottom:24px">
+      <div class="sec-tag">Status Generator</div>
+      <h2 class="sec-title" style="font-size:1.8rem;margin-top:10px">Generate Your <em>Daily WhatsApp Status</em></h2>
+      <p class="sec-sub" style="margin-inline:auto">Post a powerful status every day. Short, punchy, ready to paste.</p>
+    </div>
+    <div id="statusGenSection">
+      <div class="form-card">
+        <div class="sec-head"><div class="sec-num">1</div><div class="sec-ttl">Status Type</div></div>
+        <div class="status-types">
+          <div class="status-type" onclick="selectStatusType(this,'product')"><div class="status-type-icon">&#128230;</div><div class="status-type-name">Product Promo</div><div class="status-type-desc">Promote your product</div></div>
+          <div class="status-type" onclick="selectStatusType(this,'urgency')"><div class="status-type-icon">&#128293;</div><div class="status-type-name">Urgency/Scarcity</div><div class="status-type-desc">Limited stock warning</div></div>
+          <div class="status-type" onclick="selectStatusType(this,'testimony')"><div class="status-type-icon">&#11088;</div><div class="status-type-name">Social Proof</div><div class="status-type-desc">Happy customer story</div></div>
+          <div class="status-type" onclick="selectStatusType(this,'cta')"><div class="status-type-icon">&#128075;</div><div class="status-type-name">Call to Action</div><div class="status-type-desc">Ask them to DM you</div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="field"><label>Product / Service *</label><input type="text" id="st-product" placeholder="e.g. Brightening Body Cream" /></div>
+        <div class="row-2">
+          <div class="field"><label>Price *</label><input type="text" id="st-price" placeholder="e.g. 3500" /></div>
+          <div class="field"><label>Currency</label><select id="st-currency"><option value="&#8358;">&#8358; Nigeria</option><option value="$">$ USD</option><option value="&#163;">&#163; UK</option><option value="KSh">KSh Kenya</option><option value="GH&#8373;">GH&#8373; Ghana</option></select></div>
+        </div>
+        <div class="field">
+          <label>Style</label>
+          <div class="style-toggle">
+            <div class="style-toggle-label">Choose your tone</div>
+            <div class="toggle-pills">
+              <button class="toggle-pill active-en" id="st-eng" onclick="setStatusStyle('english')">Professional</button>
+              <button class="toggle-pill" id="st-naija" onclick="setStatusStyle('naija')">&#127475;&#127468; Naija</button>
+            </div>
+          </div>
+        </div>
+        <div class="loader" id="st-loader"><div class="spin"></div> Creating your status...</div>
+        <button class="btn-gen" id="stBtn" onclick="generateStatus()">&#128241; Generate WhatsApp Status</button>
+      </div>
+      <div class="status-out-card" id="statusOutput">
+        <div class="out-top"><h3>&#128241; Your WhatsApp Status</h3><button class="btn-copy" onclick="doCopy('statusMsg',this)">Copy</button></div>
+        <div class="status-preview"><div class="status-preview-text" id="statusMsg"></div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="share-btn wa" onclick="stShareWA()" style="font-size:12px;padding:9px 14px;">Post to WhatsApp</button>
+          <button class="share-btn native" onclick="stNativeShare()" style="font-size:12px;padding:9px 14px;">&#128228; More apps</button>
+        </div>
+        <button class="btn-reset" style="margin-top:10px" onclick="resetStatus()">&#8592; Generate another</button>
+      </div>
+    </div>
 
 
 <!-- PHONE DEMO -->
@@ -2312,6 +2439,263 @@ async function generateReply(){
     showToast('Something went wrong. Try again.');
   }
   ldr.classList.remove('show'); btn.style.display='';
+}
+
+
+/* ===== FOLLOW-UP GENERATOR ===== */
+let fuScenario = '', fuStyle = 'english';
+function selectFollowup(el, val){
+  document.querySelectorAll('.followup-chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel'); fuScenario = val;
+}
+function setFollowupStyle(s){
+  fuStyle = s;
+  document.getElementById('fu-eng').className = 'toggle-pill' + (s==='english'?' active-en':'');
+  document.getElementById('fu-naija').className = 'toggle-pill' + (s==='naija'?' active-ng':'');
+}
+async function generateFollowUp(){
+  if(!fuScenario){ showToast('Please select what happened'); return; }
+  const product = document.getElementById('fu-product').value.trim();
+  const price = document.getElementById('fu-price').value.trim();
+  if(!product||!price){ showToast('Please fill product and price'); return; }
+  const cur = document.getElementById('fu-currency').value;
+  const btn = document.getElementById('fuBtn');
+  const ldr = document.getElementById('fu-loader');
+  btn.style.display='none'; ldr.classList.add('show');
+  try {
+    const res = await fetch(`${BACKEND}/smart-reply`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        scenario: 'followup_' + fuScenario,
+        details: { product, price, cur, style: fuStyle, location:'', delivery:'', payment:'', discount:'' }
+      })
+    });
+    let reply;
+    if(res.ok){ const d=await res.json(); reply=d.reply; }
+    else { reply = buildFollowUp(fuScenario, product, cur+price, fuStyle); }
+    document.getElementById('fuMsg').textContent = reply;
+    document.getElementById('fuOutput').classList.add('show');
+    document.getElementById('fuOutput').scrollIntoView({behavior:'smooth',block:'nearest'});
+  } catch(e){
+    const reply = buildFollowUp(fuScenario, product, cur+price, fuStyle);
+    document.getElementById('fuMsg').textContent = reply;
+    document.getElementById('fuOutput').classList.add('show');
+  }
+  ldr.classList.remove('show'); btn.style.display='';
+}
+function buildFollowUp(scenario, product, price, style){
+  const naija = style === 'naija';
+  if(scenario==='ghosted'){
+    return naija
+      ? `Oga/Ma, good day o! 😊
+
+I just dey check if you still interested in ${product}.
+
+The price na ${price} and e still dey available.
+
+No pressure o, just make sure say you no miss am before e finish. 🙏`
+      : `Hi, hope you're doing well! 😊
+
+Just checking in to see if you're still interested in ${product}.
+
+It's available at ${price} and I'd love to help you secure one.
+
+No pressure at all — just don't want you to miss out! 🙏`;
+  }
+  if(scenario==='interested'){
+    return naija
+      ? `Hello! You talk say you interested for ${product} before. 😊
+
+E still dey available for ${price}.
+
+Should I reserve one for you? Just give me your address make I sort you out! 🔥`
+      : `Hi there! You mentioned being interested in ${product} earlier. 😊
+
+It's still available at ${price}.
+
+Would you like me to reserve one for you? Just send your address and we'll get it sorted! 🔥`;
+  }
+  if(scenario==='price'){
+    return naija
+      ? `I hear you o! 😊
+
+But I go honest with you — ${price} na the final price for ${product}. The quality dey worth am.
+
+Many of my customers don come back again because they satisfied. You fit give am try? 🙏`
+      : `I completely understand! 😊
+
+However, ${price} is genuinely my best price for ${product}. The quality truly makes it worth every penny.
+
+Many of my returning customers will attest to that. Would you like to give it a try? 🙏`;
+  }
+  if(scenario==='pending'){
+    return naija
+      ? `Hi! Your order for ${product} still dey pending o. 😊
+
+Once you make payment of ${price}, I go process am immediately and e go reach you sharp sharp.
+
+Which payment method work for you? 💳`
+      : `Hi! Your order for ${product} is still pending. 😊
+
+Once payment of ${price} is confirmed, I'll process and dispatch immediately.
+
+Which payment method works best for you? 💳`;
+  }
+  if(scenario==='viewed'){
+    return naija
+      ? `You see my status about ${product}? 😊
+
+E go too good for ${price} o! Delivery dey available.
+
+You go like make I reserve one for you? 🔥`
+      : `Hope you saw my status about ${product}! 😊
+
+At ${price} it's an amazing deal. Delivery is available to you.
+
+Would you like me to reserve one? 🔥`;
+  }
+  if(scenario==='stockwarn'){
+    return naija
+      ? `URGENT o! 🚨
+
+We dey almost finish ${product} for ${price}.
+
+If you still want am, you need act now before e finish completely!
+
+Reply YES make I reserve the last one for you! ⚡`
+      : `URGENT! 🚨
+
+We are almost sold out of ${product} at ${price}.
+
+If you're still interested, you need to act now before we completely run out!
+
+Reply YES and I'll reserve the last one for you! ⚡`;
+  }
+  return '';
+}
+function resetFollowUp(){
+  document.querySelectorAll('.followup-chip').forEach(c=>c.classList.remove('sel'));
+  fuScenario=''; document.getElementById('fuOutput').classList.remove('show');
+}
+function fuShareWA(){ window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('fuMsg').textContent),'_blank'); }
+function fuNativeShare(){ if(navigator.share){navigator.share({text:document.getElementById('fuMsg').textContent});}else{navigator.clipboard.writeText(document.getElementById('fuMsg').textContent).then(()=>showToast('Copied!'));} }
+
+/* ===== WHATSAPP STATUS GENERATOR ===== */
+let stType = '', stStyle = 'english';
+function selectStatusType(el, val){
+  document.querySelectorAll('.status-type').forEach(s=>s.classList.remove('sel'));
+  el.classList.add('sel'); stType = val;
+}
+function setStatusStyle(s){
+  stStyle = s;
+  document.getElementById('st-eng').className = 'toggle-pill' + (s==='english'?' active-en':'');
+  document.getElementById('st-naija').className = 'toggle-pill' + (s==='naija'?' active-ng':'');
+}
+async function generateStatus(){
+  if(!stType){ showToast('Please select a status type'); return; }
+  const product = document.getElementById('st-product').value.trim();
+  const price = document.getElementById('st-price').value.trim();
+  if(!product||!price){ showToast('Please fill product and price'); return; }
+  const cur = document.getElementById('st-currency').value;
+  const btn = document.getElementById('stBtn');
+  const ldr = document.getElementById('st-loader');
+  btn.style.display='none'; ldr.classList.add('show');
+  const status = buildStatus(stType, product, cur+price, stStyle);
+  setTimeout(()=>{
+    document.getElementById('statusMsg').textContent = status;
+    document.getElementById('statusOutput').classList.add('show');
+    document.getElementById('statusOutput').scrollIntoView({behavior:'smooth',block:'nearest'});
+    ldr.classList.remove('show'); btn.style.display='';
+  }, 800);
+}
+function buildStatus(type, product, price, style){
+  const naija = style === 'naija';
+  if(type==='product'){
+    return naija
+      ? `TODAY SPECIAL!!! 🔥
+
+${product} dey available!
+Price: ${price}
+
+Quality guaranteed, delivery available.
+
+DM me to order now! ⚡
+
+#available #orderNow`
+      : `Available Now! ✨
+
+${product}
+Price: ${price}
+
+Top quality. Fast delivery.
+
+DM to order 👇`;
+  }
+  if(type==='urgency'){
+    return naija
+      ? `LAST FEW REMAINING!!! 🚨
+
+${product} dey almost finish!
+Price: ${price}
+
+Once e finish, e finish o!
+DM me NOW before you miss am! 👇`
+      : `Almost Gone! ⚠️
+
+${product} — Only a few left!
+Price: ${price}
+
+Don't miss out. DM now to secure yours before it's gone! 🏃`;
+  }
+  if(type==='testimony'){
+    return naija
+      ? `My customer just tell me say she happy with the ${product}! 😊
+
+Price: ${price}
+
+If she happy, you go happy too!
+DM me to get yours today! ⭐`
+      : `Customer Review! ⭐
+
+"I love my ${product}! Best purchase I've made." — Happy Customer
+
+Price: ${price}
+
+Want the same results? DM me today! 😊`;
+  }
+  if(type==='cta'){
+    return naija
+      ? `You still dey sleep? 😂
+
+${product} dey wait for you!
+Price: ${price}
+
+DM me right now make I sort you out!
+No dulling! 🔥`
+      : `Still thinking about it? 😊
+
+${product} is still available at ${price}.
+
+DM me today and let's get you sorted!
+Delivery available nationwide 📦`;
+  }
+  return '';
+}
+function resetStatus(){
+  document.querySelectorAll('.status-type').forEach(s=>s.classList.remove('sel'));
+  stType=''; document.getElementById('statusOutput').classList.remove('show');
+}
+function stShareWA(){ window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('statusMsg').textContent),'_blank'); }
+function stNativeShare(){ if(navigator.share){navigator.share({text:document.getElementById('statusMsg').textContent});}else{navigator.clipboard.writeText(document.getElementById('statusMsg').textContent).then(()=>showToast('Copied!'));} }
+
+/* ===== NAIJA STYLE TOGGLE FOR SMART REPLY ===== */
+let srStyle = 'english';
+function setSRStyle(s){
+  srStyle = s;
+  const engBtn = document.getElementById('sr-eng');
+  const ngBtn = document.getElementById('sr-naija');
+  if(engBtn) engBtn.className = 'toggle-pill' + (s==='english'?' active-en':'');
+  if(ngBtn) ngBtn.className = 'toggle-pill' + (s==='naija'?' active-ng':'');
 }
 
 /* Count-up on scroll */
