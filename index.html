@@ -1110,7 +1110,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
     </div><!-- /generateSection -->
 
     <!-- SMART REPLY SECTION -->
-    <div id="smartReplySection" style="display:none">
+    <div id="smartReplySection">
       <p id="sr-test" style="color:#25D366;font-size:24px;padding:20px;font-weight:bold">✅ Smart Reply is working</p>
       <div class="form-card">
         <div class="sec-head"><div class="sec-num">1</div><div class="sec-ttl">What did the customer say?</div></div>
@@ -1815,14 +1815,16 @@ function switchTab(tab){
   const gs = document.getElementById('generateSection');
   const sr = document.getElementById('smartReplySection');
   if(tab==='generate'){
-    gs.style.cssText = 'display:block';
-    sr.style.cssText = 'display:none';
+    gs.style.removeProperty('display');
+    sr.style.display = 'none';
+    gs.scrollIntoView({behavior:'smooth',block:'start'});
   } else {
-    gs.style.cssText = 'display:none';
-    sr.style.cssText = 'display:block;min-height:500px;padding:4px';
-    setTimeout(()=>sr.scrollIntoView({behavior:'smooth',block:'nearest'}), 150);
+    gs.style.display = 'none';
+    sr.style.removeProperty('display');
+    sr.style.minHeight = '400px';
+    sr.scrollIntoView({behavior:'smooth',block:'start'});
   }
-  if(typeof gtag !== 'undefined') if(typeof gtag !== 'undefined') gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
+  if(typeof gtag !== 'undefined') gtag('event','tab_switch',{event_category:'engagement',event_label:tab});
 }
 
 /* ===== SCENARIO SELECTION ===== */
