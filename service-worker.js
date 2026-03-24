@@ -1,4 +1,4 @@
-const CACHE = 'chat2cash-v2';
+const CACHE = 'chat2cash-v3';
 const ASSETS = ['/chat2cash/', '/chat2cash/index.html'];
 
 self.addEventListener('install', e => {
