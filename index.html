@@ -745,6 +745,19 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .wa-capture-success{display:none;color:var(--green);font-size:13px;margin-top:12px;font-weight:700;}
 .wa-capture-success.show{display:block;}
 
+
+/* ===== BOTTOM APP NAV ===== */
+.app-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(9,12,10,0.97);border-top:1px solid rgba(37,211,102,0.15);display:flex;justify-content:space-around;align-items:center;padding:8px 0 max(8px,env(safe-area-inset-bottom));backdrop-filter:blur(20px);}
+.app-nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 16px;border-radius:12px;transition:all .2s;min-width:60px;}
+.app-nav-item:active{background:rgba(37,211,102,0.1);}
+.app-nav-icon{font-size:22px;line-height:1;}
+.app-nav-label{font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--muted);letter-spacing:0.3px;transition:color .2s;}
+.app-nav-item.active .app-nav-label{color:var(--green);}
+.app-nav-item.active .app-nav-icon{filter:drop-shadow(0 0 6px rgba(37,211,102,0.6));}
+.app-nav-dot{width:4px;height:4px;border-radius:50%;background:var(--green);margin-top:1px;opacity:0;transition:opacity .2s;}
+.app-nav-item.active .app-nav-dot{opacity:1;}
+body{padding-bottom:70px;}
+
 </style>
 
 <link rel="manifest" href="/chat2cash/manifest.json">
@@ -2821,6 +2834,46 @@ function showInstallGuide(){
   }
 }
 
+
+/* ===== BOTTOM APP NAVIGATION ===== */
+const navSections = {
+  generate: 'generateSection',
+  reply: 'smartReplySection',
+  followup: 'followUpSection',
+  status: 'statusGenSection'
+};
+
+function navTo(tab){
+  // Update active state
+  document.querySelectorAll('.app-nav-item').forEach(item => item.classList.remove('active'));
+  document.getElementById('nav-' + tab).classList.add('active');
+
+  // Scroll to section
+  const sectionId = navSections[tab];
+  const section = document.getElementById(sectionId);
+  if(section){
+    const top = section.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({top: top, behavior: 'smooth'});
+  }
+
+  if(typeof gtag !== 'undefined') gtag('event','nav_tap',{event_category:'navigation',event_label:tab});
+}
+
+// Update active nav item on scroll
+window.addEventListener('scroll', function(){
+  const scrollY = window.scrollY + 120;
+  let activeTab = 'generate';
+  Object.entries(navSections).forEach(([tab, sectionId])=>{
+    const el = document.getElementById(sectionId);
+    if(el && el.offsetTop <= scrollY){
+      activeTab = tab;
+    }
+  });
+  document.querySelectorAll('.app-nav-item').forEach(item => item.classList.remove('active'));
+  const activeEl = document.getElementById('nav-' + activeTab);
+  if(activeEl) activeEl.classList.add('active');
+}, {passive: true});
+
 /* Count-up on scroll */
 (function(){
   const nums = document.querySelectorAll('.proof-num');
@@ -2869,6 +2922,31 @@ function showInstallGuide(){
     <button onclick="document.getElementById('installModal').style.display='none'" style="width:100%;background:linear-gradient(135deg,#25D366,#1db954);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;padding:14px;border-radius:12px;border:none;cursor:pointer;">Got it!</button>
   </div>
 </div>
+
+
+<!-- BOTTOM APP NAVIGATION -->
+<nav class="app-nav" id="appNav">
+  <div class="app-nav-item active" id="nav-generate" onclick="navTo('generate')">
+    <div class="app-nav-icon">⚡</div>
+    <div class="app-nav-label">Generate</div>
+    <div class="app-nav-dot"></div>
+  </div>
+  <div class="app-nav-item" id="nav-reply" onclick="navTo('reply')">
+    <div class="app-nav-icon">💬</div>
+    <div class="app-nav-label">Reply</div>
+    <div class="app-nav-dot"></div>
+  </div>
+  <div class="app-nav-item" id="nav-followup" onclick="navTo('followup')">
+    <div class="app-nav-icon">📩</div>
+    <div class="app-nav-label">Follow-Up</div>
+    <div class="app-nav-dot"></div>
+  </div>
+  <div class="app-nav-item" id="nav-status" onclick="navTo('status')">
+    <div class="app-nav-icon">📱</div>
+    <div class="app-nav-label">Status</div>
+    <div class="app-nav-dot"></div>
+  </div>
+</nav>
 
 </body>
 </html>
