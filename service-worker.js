@@ -1,19 +1,6 @@
-const CACHE = 'chat2cash-v3';
-const ASSETS = ['/chat2cash/', '/chat2cash/index.html'];
-
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
-  self.skipWaiting();
-});
-
+self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys =>
-    Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-  ));
+  e.waitUntil(caches.keys().then(k => Promise.all(k.map(n => caches.delete(n)))));
+  self.clients.claim();
 });
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
-  );
-});
+self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));
