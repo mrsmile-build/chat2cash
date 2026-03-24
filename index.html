@@ -2837,38 +2837,40 @@ function showInstallGuide(){
 
 /* ===== BOTTOM APP NAVIGATION ===== */
 const navSections = {
-  generate: 'generateSection',
+  home: 'hero',
+  generate: 'tool',
   reply: 'smartReplySection',
-  followup: 'followUpSection',
-  status: 'statusGenSection'
+  about: 'about-section'
 };
 
 function navTo(tab){
-  // Update active state
   document.querySelectorAll('.app-nav-item').forEach(item => item.classList.remove('active'));
   document.getElementById('nav-' + tab).classList.add('active');
-
-  // Scroll to section
+  if(tab === 'home'){
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
+  }
+  if(tab === 'about'){
+    window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+    return;
+  }
   const sectionId = navSections[tab];
   const section = document.getElementById(sectionId);
   if(section){
     const top = section.getBoundingClientRect().top + window.scrollY - 80;
     window.scrollTo({top: top, behavior: 'smooth'});
   }
-
   if(typeof gtag !== 'undefined') gtag('event','nav_tap',{event_category:'navigation',event_label:tab});
 }
 
-// Update active nav item on scroll
 window.addEventListener('scroll', function(){
-  const scrollY = window.scrollY + 120;
-  let activeTab = 'generate';
-  Object.entries(navSections).forEach(([tab, sectionId])=>{
-    const el = document.getElementById(sectionId);
-    if(el && el.offsetTop <= scrollY){
-      activeTab = tab;
-    }
-  });
+  const scrollY = window.scrollY;
+  const toolEl = document.getElementById('tool');
+  const replyEl = document.getElementById('smartReplySection');
+  let activeTab = 'home';
+  if(toolEl && scrollY >= toolEl.offsetTop - 100) activeTab = 'generate';
+  if(replyEl && scrollY >= replyEl.offsetTop - 100) activeTab = 'reply';
+  if(scrollY + window.innerHeight >= document.body.scrollHeight - 200) activeTab = 'about';
   document.querySelectorAll('.app-nav-item').forEach(item => item.classList.remove('active'));
   const activeEl = document.getElementById('nav-' + activeTab);
   if(activeEl) activeEl.classList.add('active');
@@ -2926,7 +2928,12 @@ window.addEventListener('scroll', function(){
 
 <!-- BOTTOM APP NAVIGATION -->
 <nav class="app-nav" id="appNav">
-  <div class="app-nav-item active" id="nav-generate" onclick="navTo('generate')">
+  <div class="app-nav-item active" id="nav-home" onclick="navTo('home')">
+    <div class="app-nav-icon">🏠</div>
+    <div class="app-nav-label">Home</div>
+    <div class="app-nav-dot"></div>
+  </div>
+  <div class="app-nav-item" id="nav-generate" onclick="navTo('generate')">
     <div class="app-nav-icon">⚡</div>
     <div class="app-nav-label">Generate</div>
     <div class="app-nav-dot"></div>
@@ -2936,14 +2943,9 @@ window.addEventListener('scroll', function(){
     <div class="app-nav-label">Reply</div>
     <div class="app-nav-dot"></div>
   </div>
-  <div class="app-nav-item" id="nav-followup" onclick="navTo('followup')">
-    <div class="app-nav-icon">📩</div>
-    <div class="app-nav-label">Follow-Up</div>
-    <div class="app-nav-dot"></div>
-  </div>
-  <div class="app-nav-item" id="nav-status" onclick="navTo('status')">
-    <div class="app-nav-icon">📱</div>
-    <div class="app-nav-label">Status</div>
+  <div class="app-nav-item" id="nav-about" onclick="navTo('about')">
+    <div class="app-nav-icon">ℹ️</div>
+    <div class="app-nav-label">About</div>
     <div class="app-nav-dot"></div>
   </div>
 </nav>
