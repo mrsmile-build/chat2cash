@@ -2854,11 +2854,15 @@ function navTo(tab){
     window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     return;
   }
-  const sectionId = navSections[tab];
-  const section = document.getElementById(sectionId);
-  if(section){
-    const top = section.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({top: top, behavior: 'smooth'});
+  if(tab === 'generate'){
+    const el = document.getElementById('tool');
+    if(el){ window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 60, behavior: 'smooth'}); }
+    return;
+  }
+  if(tab === 'reply'){
+    const el = document.getElementById('smartReplySection');
+    if(el){ window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 60, behavior: 'smooth'}); }
+    return;
   }
   if(typeof gtag !== 'undefined') gtag('event','nav_tap',{event_category:'navigation',event_label:tab});
 }
