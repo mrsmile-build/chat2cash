@@ -267,7 +267,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .phone-wrap{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;margin-top:48px;}
 .phone-frame{width:240px;flex-shrink:0;background:#1a1a1a;border-radius:36px;padding:14px;box-shadow:0 0 0 2px #2a2a2a,0 24px 60px rgba(0,0,0,0.6),0 0 40px rgba(37,211,102,0.08);}
 .phone-notch{width:70px;height:10px;background:#2a2a2a;border-radius:100px;margin:0 auto 10px;}
-.phone-screen{background:#0b1410;border-radius:22px;overflow:hidden;min-height:380px;}
+.phone-screen{background:#0b1410;border-radius:22px;overflow:visible;min-height:380px;}
 .phone-topbar{background:#075e54;padding:10px 14px;display:flex;align-items:center;gap:9px;}
 .phone-avatar{width:32px;height:32px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
 .phone-contact{flex:1;}
@@ -306,12 +306,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 
 /* ===== FAQ ===== */
 .faq-list{margin-top:36px;display:flex;flex-direction:column;gap:10px;}
-.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:visible;}
 .faq-q{width:100%;background:none;border:none;padding:18px 20px;text-align:left;color:var(--text);font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .2s;}
 .faq-q:hover{background:rgba(255,255,255,.03);}
 .faq-icon{font-size:18px;color:var(--green);flex-shrink:0;transition:transform .25s;}
 .faq-icon.open{transform:rotate(45deg);}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease;font-size:14px;color:var(--muted);line-height:1.7;padding:0 20px;}
+.faq-a{max-height:0;overflow:visible;transition:max-height .3s ease,padding .3s ease;font-size:14px;color:var(--muted);line-height:1.7;padding:0 20px;}
 .faq-a.open{max-height:200px;padding:0 20px 18px;}
 
 /* ===== FINAL CTA ===== */
