@@ -2844,19 +2844,7 @@ const navSections = {
 };
 
 function navTo(tab){
-document.getElementById('home').style.display='none';
-document.getElementById('generate').style.display='none';
-document.getElementById('reply').style.display='none';
-document.getElementById('about').style.display='none';
-
-document.getElementById(tab).style.display='block';
-
-document.getElementById('nav-home').classList.remove('active');
-document.getElementById('nav-generate').classList.remove('active');
-document.getElementById('nav-reply').classList.remove('active');
-document.getElementById('nav-about').classList.remove('active');
-
-document.getElementById('nav-'+tab).classList.add('active');
+  document.getElementById(tab).scrollIntoView({behavior:'smooth'});
 }
   if(tab === 'about'){
     window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
