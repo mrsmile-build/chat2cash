@@ -729,6 +729,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .status-preview-text{font-size:14px;color:#e9edef;line-height:1.7;white-space:pre-wrap;}
 
 </style>
+
+<link rel="manifest" href="/chat2cash/manifest.json">
+<meta name="theme-color" content="#25D366">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Chat2Cash">
 </head>
 <body>
 
@@ -1065,6 +1071,25 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
         </a>
       </div>
       <button class="btn-reset" onclick="resetAll()">← Generate for another product</button>
+        <div style="margin-top:16px;background:linear-gradient(135deg,#0d1a0f,#0a1409);border:1px solid rgba(255,214,10,0.2);border-radius:14px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#6b7d70;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Want more business ideas?</div>
+          <div style="font-size:14px;font-weight:700;color:#eef2ef;margin-bottom:10px;">75 Profitable Nigerian Businesses You Can Start With &#8358;5,000</div>
+          <a href="https://selar.com/da6560tl0v" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#ffd60a,#f5c400);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;padding:10px 24px;border-radius:100px;text-decoration:none;">Get the Ebook &#8358;2,000 &#8594;</a>
+        </div>
+        <div style="margin-top:10px;background:linear-gradient(135deg,#0d1a0f,#0a1409);border:1px solid rgba(37,211,102,0.2);border-radius:14px;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#6b7d70;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Want to close more sales on WhatsApp?</div>
+          <div style="font-size:14px;font-weight:700;color:#eef2ef;margin-bottom:10px;">WhatsApp Selling Blueprint &#8212; Turn Chats into Cash in Nigeria</div>
+          <a href="https://selar.com/0212l43d3a" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#25D366,#1db954);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;padding:10px 24px;border-radius:100px;text-decoration:none;">Get it Now &#8358;1,500 &#8594;</a>
+        </div>
+        <div class="wa-capture-box" style="margin-top:16px;background:linear-gradient(135deg,#0d1a0f,#0a1409);border:1px solid rgba(37,211,102,0.25);border-radius:14px;padding:16px;text-align:center;">
+          <div style="font-size:13px;font-weight:700;color:#eef2ef;margin-bottom:6px;">&#128242; Get Free Daily Selling Tips</div>
+          <p style="font-size:12px;color:#6b7d70;margin-bottom:12px;line-height:1.6;">Drop your WhatsApp number and we will send you free tips on how to close more sales every week.</p>
+          <div style="display:flex;gap:8px;">
+            <input type="tel" id="waCaptureNum" placeholder="e.g. 2348012345678" maxlength="15" style="flex:1;background:#131813;border:1.5px solid rgba(255,255,255,0.07);border-radius:12px;padding:11px 14px;font-size:13px;color:#eef2ef;font-family:'DM Sans',sans-serif;" />
+            <button onclick="submitWACapture()" style="background:linear-gradient(135deg,#25D366,#1db954);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;padding:11px 16px;border-radius:12px;border:none;cursor:pointer;">Get Tips</button>
+          </div>
+          <div id="waCaptureSuccess" style="display:none;color:#25D366;font-size:12px;margin-top:10px;font-weight:700;">&#10003; Done! Watch out for tips on WhatsApp &#127881;</div>
+        </div>
 
 
       <!-- WHAT TO DO NEXT -->
@@ -2698,6 +2723,51 @@ function setSRStyle(s){
   if(ngBtn) ngBtn.className = 'toggle-pill' + (s==='naija'?' active-ng':'');
 }
 
+
+/* ===== PWA ===== */
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault(); deferredPrompt=e;
+  document.getElementById('pwaBanner').style.display='flex';
+});
+function installPWA(){
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.waitForChoiceResult().then(()=>{
+    deferredPrompt=null;
+    document.getElementById('pwaBanner').style.display='none';
+  });
+}
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/chat2cash/service-worker.js').catch(e=>console.log(e));
+}
+
+/* ===== WA CAPTURE ===== */
+async function submitWACapture(){
+  const num=document.getElementById('waCaptureNum').value.trim();
+  if(!num||num.length<10){showToast('Please enter a valid WhatsApp number');return;}
+  try{
+    await fetch('https://formspree.io/f/mkovyanq',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({_subject:'New WhatsApp Number - Chat2Cash',whatsapp_number:num})
+    });
+  }catch(e){}
+  document.getElementById('waCaptureSuccess').style.display='block';
+  document.getElementById('waCaptureNum').value='';
+}
+
+/* ===== DEMO PREFILL ===== */
+function prefillDemo(){
+  setType('single');
+  setStyle('fire');
+  setTimeout(()=>{
+    const f={'sp-product':'Brightening Body Cream','sp-qty':'500ml bottle','sp-price':'3500','sp-target':'Ladies who want glowing skin','sp-benefit':'Smoother glowing skin in 7 days','sp-speed':'Same day delivery Lagos','waNumber':'2348000000000'};
+    Object.entries(f).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.value=val;});
+    const cur=document.getElementById('sp-currency');if(cur)cur.value='&#8358;';
+    showToast('Example loaded! Tap Generate to see the magic &#9889;');
+  },300);
+}
+
 /* Count-up on scroll */
 (function(){
   const nums = document.querySelectorAll('.proof-num');
@@ -2714,5 +2784,10 @@ function setSRStyle(s){
 })();
 
 </script>
+
+<div id="pwaBanner" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:999;background:linear-gradient(135deg,#25D366,#1db954);border-radius:100px;padding:12px 24px;box-shadow:0 8px 32px rgba(37,211,102,0.4);cursor:pointer;white-space:nowrap;" onclick="installPWA()">
+  <span style="font-size:14px;font-weight:800;color:#000;font-family:'Syne',sans-serif;">&#128242; Install Chat2Cash App</span>
+</div>
+
 </body>
 </html>
