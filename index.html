@@ -175,7 +175,7 @@ section{position:relative;z-index:1;padding:90px 20px;}
 
 .btn-gen{width:100%;padding:15px 20px;background:var(--green);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px;}
 .btn-gen:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,211,102,.33);}
-.loader{display:block;align-items:center;justify-content:center;gap:9px;padding:15px;color:var(--green);font-size:14px;}
+.loader{display:none;align-items:center;justify-content:center;gap:9px;padding:15px;color:var(--green);font-size:14px;}
 .loader.show{display:flex;}
 .spin{width:18px;height:18px;border:2px solid rgba(37,211,102,.2);border-top-color:var(--green);border-radius:50%;animation:sp .65s linear infinite;}
 
@@ -948,7 +948,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
               <div class="upload-drop-title">Tap to upload product photo</div>
               <div class="upload-drop-sub">JPG · PNG · WEBP · Max 5MB · Free hosting</div>
             </div>
-            <div id="upload-file-zone" class="upload-drop" style="display:block">
+            <div id="upload-file-zone" class="upload-drop" style="display:none">
               <input type="file" id="docFileInput" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
               <div class="upload-drop-icon">📄</div>
               <div class="upload-drop-title">Tap to upload file or PDF</div>
@@ -997,7 +997,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
               <div class="upload-drop-title">Tap to upload product photo</div>
               <div class="upload-drop-sub">JPG · PNG · Max 5MB · Free hosting</div>
             </div>
-            <div id="upload-file-zone2" class="upload-drop" style="display:block">
+            <div id="upload-file-zone2" class="upload-drop" style="display:none">
               <input type="file" id="docFileInput2" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
               <div class="upload-drop-icon">📄</div>
               <div class="upload-drop-title">Tap to upload file or PDF</div>
@@ -1045,7 +1045,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
               <div class="upload-drop-title">Tap to upload product photo</div>
               <div class="upload-drop-sub">JPG · PNG · Max 5MB · Free hosting</div>
             </div>
-            <div id="upload-file-zone3" class="upload-drop" style="display:block">
+            <div id="upload-file-zone3" class="upload-drop" style="display:none">
               <input type="file" id="docFileInput3" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
               <div class="upload-drop-icon">📄</div>
               <div class="upload-drop-title">Tap to upload file or PDF</div>
@@ -1093,7 +1093,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
               <div class="upload-drop-title">Tap to upload product photo</div>
               <div class="upload-drop-sub">JPG · PNG · Max 5MB · Free hosting</div>
             </div>
-            <div id="upload-file-zone4" class="upload-drop" style="display:block">
+            <div id="upload-file-zone4" class="upload-drop" style="display:none">
               <input type="file" id="docFileInput4" accept=".pdf,.doc,.docx,.txt" onchange="handleUpload(this,'file')" />
               <div class="upload-drop-icon">📄</div>
               <div class="upload-drop-title">Tap to upload file or PDF</div>
