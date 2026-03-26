@@ -746,8 +746,51 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .wa-capture-success.show{display:block;}
 
 
+/* ===== NAIJA STYLE TOGGLE ===== */
+.style-toggle{display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;}
+.style-toggle-label{font-size:13px;color:var(--muted);flex:1;}
+.toggle-pills{display:flex;gap:6px;}
+.toggle-pill{padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);color:var(--muted);background:none;transition:all .2s;font-family:"DM Sans",sans-serif;}
+.toggle-pill.active-en{background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.4);color:var(--green);}
+.toggle-pill.active-ng{background:rgba(255,214,10,0.12);border-color:rgba(255,214,10,0.4);color:#ffd60a;}
+.followup-chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.followup-chip{padding:10px 12px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;font-size:12.5px;color:var(--muted);text-align:center;transition:all .2s;line-height:1.4;}
+.followup-chip:hover{border-color:rgba(255,255,255,.18);color:var(--text);}
+.followup-chip.sel{background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.4);color:var(--green);}
+.fu-out-card{background:var(--card);border:1px solid rgba(37,211,102,.3);border-radius:18px;padding:20px;margin-top:12px;display:block;}
+.fu-out-card.show{display:block;}
+.status-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.status-type{padding:12px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;transition:all .2s;}
+.status-type:hover{border-color:rgba(255,255,255,.18);}
+.status-type.sel{background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.4);}
+.status-type-icon{font-size:24px;margin-bottom:4px;}
+.status-type-name{font-size:12px;font-weight:700;color:var(--text);}
+.status-type-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.status-out-card{background:var(--card);border:1px solid rgba(37,211,102,.3);border-radius:18px;padding:20px;margin-top:12px;display:block;}
+.status-out-card.show{display:block;}
+.status-preview{background:#0b1410;border-radius:12px;padding:16px;margin-bottom:14px;}
+.status-preview-text{font-size:14px;color:#e9edef;line-height:1.7;white-space:pre-wrap;}
+
+
+/* ===== PWA INSTALL ===== */
+.pwa-banner{display:block;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:10;background:linear-gradient(135deg,#25D366,#1db954);border-radius:100px;padding:12px 24px;box-shadow:0 8px 32px rgba(37,211,102,0.4);cursor:pointer;white-space:nowrap;}
+.pwa-banner-inner{display:flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#000;}
+.pwa-banner.show{display:flex;animation:fu .4s ease both;}
+
+/* ===== WHATSAPP CAPTURE ===== */
+.wa-capture-box{background:linear-gradient(135deg,#0d1a0f,#0a1409);border:1px solid rgba(37,211,102,0.25);border-radius:20px;padding:28px 24px;margin:40px 0;text-align:center;}
+.wa-capture-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:8px;}
+.wa-capture-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+.wa-capture-row{display:flex;gap:8px;}
+.wa-capture-input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;}
+.wa-capture-input:focus{outline:none;border-color:rgba(37,211,102,.4);}
+.wa-capture-btn{background:linear-gradient(135deg,#25D366,#1db954);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;padding:13px 20px;border-radius:12px;border:none;cursor:pointer;white-space:nowrap;}
+.wa-capture-success{display:block;color:var(--green);font-size:13px;margin-top:12px;font-weight:700;}
+.wa-capture-success.show{display:block;}
+
+
 /* ===== BOTTOM APP NAV ===== */
-.app-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(9,12,10,0.97);border-top:1px solid rgba(37,211,102,0.15);display:flex;justify-content:space-around;align-items:center;padding:8px 0 max(8px,env(safe-area-inset-bottom));backdrop-filter:blur(20px);}
+.app-nav{position:fixed;bottom:0;left:0;right:0;z-index:1;background:rgba(9,12,10,0.97);border-top:1px solid rgba(37,211,102,0.15);display:flex;justify-content:space-around;align-items:center;padding:8px 0 max(8px,env(safe-area-inset-bottom));backdrop-filter:blur(20px);}
 .app-nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 8px;border-radius:12px;transition:all .2s;flex:1;}
 .app-nav-item:active{background:rgba(37,211,102,0.1);}
 .app-nav-icon{font-size:22px;line-height:1;}
@@ -756,7 +799,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .app-nav-item.active .app-nav-icon{filter:drop-shadow(0 0 6px rgba(37,211,102,0.6));}
 .app-nav-dot{width:4px;height:4px;border-radius:50%;background:var(--green);margin-top:1px;opacity:1;transition:opacity .2s;}
 .app-nav-item.active .app-nav-dot{opacity:1;}
-body{padding-bottom:70px;}
+
 
 </style>
 
@@ -2831,6 +2874,339 @@ function showInstallGuide(){
 }
 
 
+/* ===== FOLLOW-UP GENERATOR ===== */
+let fuScenario = '', fuStyle = 'english';
+function selectFollowup(el, val){
+  document.querySelectorAll('.followup-chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel'); fuScenario = val;
+}
+function setFollowupStyle(s){
+  fuStyle = s;
+  document.getElementById('fu-eng').className = 'toggle-pill' + (s==='english'?' active-en':'');
+  document.getElementById('fu-naija').className = 'toggle-pill' + (s==='naija'?' active-ng':'');
+}
+async function generateFollowUp(){
+  if(!fuScenario){ showToast('Please select what happened'); return; }
+  const product = document.getElementById('fu-product').value.trim();
+  const price = document.getElementById('fu-price').value.trim();
+  if(!product||!price){ showToast('Please fill product and price'); return; }
+  const cur = document.getElementById('fu-currency').value;
+  const btn = document.getElementById('fuBtn');
+  const ldr = document.getElementById('fu-loader');
+  btn.style.display='none'; ldr.classList.add('show');
+  try {
+    const res = await fetch(`${BACKEND}/smart-reply`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        scenario: 'followup_' + fuScenario,
+        details: { product, price, cur, style: fuStyle, location:'', delivery:'', payment:'', discount:'' }
+      })
+    });
+    let reply;
+    if(res.ok){ const d=await res.json(); reply=d.reply; }
+    else { reply = buildFollowUp(fuScenario, product, cur+price, fuStyle); }
+    document.getElementById('fuMsg').textContent = reply;
+    document.getElementById('fuOutput').classList.add('show');
+    document.getElementById('fuOutput').scrollIntoView({behavior:'smooth',block:'nearest'});
+  } catch(e){
+    const reply = buildFollowUp(fuScenario, product, cur+price, fuStyle);
+    document.getElementById('fuMsg').textContent = reply;
+    document.getElementById('fuOutput').classList.add('show');
+  }
+  ldr.classList.remove('show'); btn.style.display='';
+}
+function buildFollowUp(scenario, product, price, style){
+  const naija = style === 'naija';
+  if(scenario==='ghosted'){
+    return naija
+      ? `Oga/Ma, good day o! 😊
+
+I just dey check if you still interested in ${product}.
+
+The price na ${price} and e still dey available.
+
+No pressure o, just make sure say you no miss am before e finish. 🙏`
+      : `Hi, hope you're doing well! 😊
+
+Just checking in to see if you're still interested in ${product}.
+
+It's available at ${price} and I'd love to help you secure one.
+
+No pressure at all — just don't want you to miss out! 🙏`;
+  }
+  if(scenario==='interested'){
+    return naija
+      ? `Hello! You talk say you interested for ${product} before. 😊
+
+E still dey available for ${price}.
+
+Should I reserve one for you? Just give me your address make I sort you out! 🔥`
+      : `Hi there! You mentioned being interested in ${product} earlier. 😊
+
+It's still available at ${price}.
+
+Would you like me to reserve one for you? Just send your address and we'll get it sorted! 🔥`;
+  }
+  if(scenario==='price'){
+    return naija
+      ? `I hear you o! 😊
+
+But I go honest with you — ${price} na the final price for ${product}. The quality dey worth am.
+
+Many of my customers don come back again because they satisfied. You fit give am try? 🙏`
+      : `I completely understand! 😊
+
+However, ${price} is genuinely my best price for ${product}. The quality truly makes it worth every penny.
+
+Many of my returning customers will attest to that. Would you like to give it a try? 🙏`;
+  }
+  if(scenario==='pending'){
+    return naija
+      ? `Hi! Your order for ${product} still dey pending o. 😊
+
+Once you make payment of ${price}, I go process am immediately and e go reach you sharp sharp.
+
+Which payment method work for you? 💳`
+      : `Hi! Your order for ${product} is still pending. 😊
+
+Once payment of ${price} is confirmed, I'll process and dispatch immediately.
+
+Which payment method works best for you? 💳`;
+  }
+  if(scenario==='viewed'){
+    return naija
+      ? `You see my status about ${product}? 😊
+
+E go too good for ${price} o! Delivery dey available.
+
+You go like make I reserve one for you? 🔥`
+      : `Hope you saw my status about ${product}! 😊
+
+At ${price} it's an amazing deal. Delivery is available to you.
+
+Would you like me to reserve one? 🔥`;
+  }
+  if(scenario==='stockwarn'){
+    return naija
+      ? `URGENT o! 🚨
+
+We dey almost finish ${product} for ${price}.
+
+If you still want am, you need act now before e finish completely!
+
+Reply YES make I reserve the last one for you! ⚡`
+      : `URGENT! 🚨
+
+We are almost sold out of ${product} at ${price}.
+
+If you're still interested, you need to act now before we completely run out!
+
+Reply YES and I'll reserve the last one for you! ⚡`;
+  }
+  return '';
+}
+function resetFollowUp(){
+  document.querySelectorAll('.followup-chip').forEach(c=>c.classList.remove('sel'));
+  fuScenario=''; document.getElementById('fuOutput').classList.remove('show');
+}
+function fuShareWA(){ window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('fuMsg').textContent),'_blank'); }
+function fuNativeShare(){ if(navigator.share){navigator.share({text:document.getElementById('fuMsg').textContent});}else{navigator.clipboard.writeText(document.getElementById('fuMsg').textContent).then(()=>showToast('Copied!'));} }
+
+/* ===== WHATSAPP STATUS GENERATOR ===== */
+let stType = '', stStyle = 'english';
+function selectStatusType(el, val){
+  document.querySelectorAll('.status-type').forEach(s=>s.classList.remove('sel'));
+  el.classList.add('sel'); stType = val;
+}
+function setStatusStyle(s){
+  stStyle = s;
+  document.getElementById('st-eng').className = 'toggle-pill' + (s==='english'?' active-en':'');
+  document.getElementById('st-naija').className = 'toggle-pill' + (s==='naija'?' active-ng':'');
+}
+async function generateStatus(){
+  if(!stType){ showToast('Please select a status type'); return; }
+  const product = document.getElementById('st-product').value.trim();
+  const price = document.getElementById('st-price').value.trim();
+  if(!product||!price){ showToast('Please fill product and price'); return; }
+  const cur = document.getElementById('st-currency').value;
+  const btn = document.getElementById('stBtn');
+  const ldr = document.getElementById('st-loader');
+  btn.style.display='none'; ldr.classList.add('show');
+  const status = buildStatus(stType, product, cur+price, stStyle);
+  setTimeout(()=>{
+    document.getElementById('statusMsg').textContent = status;
+    document.getElementById('statusOutput').classList.add('show');
+    document.getElementById('statusOutput').scrollIntoView({behavior:'smooth',block:'nearest'});
+    ldr.classList.remove('show'); btn.style.display='';
+  }, 800);
+}
+function buildStatus(type, product, price, style){
+  const naija = style === 'naija';
+  if(type==='product'){
+    return naija
+      ? `TODAY SPECIAL!!! 🔥
+
+${product} dey available!
+Price: ${price}
+
+Quality guaranteed, delivery available.
+
+DM me to order now! ⚡
+
+#available #orderNow`
+      : `Available Now! ✨
+
+${product}
+Price: ${price}
+
+Top quality. Fast delivery.
+
+DM to order 👇`;
+  }
+  if(type==='urgency'){
+    return naija
+      ? `LAST FEW REMAINING!!! 🚨
+
+${product} dey almost finish!
+Price: ${price}
+
+Once e finish, e finish o!
+DM me NOW before you miss am! 👇`
+      : `Almost Gone! ⚠️
+
+${product} — Only a few left!
+Price: ${price}
+
+Don't miss out. DM now to secure yours before it's gone! 🏃`;
+  }
+  if(type==='testimony'){
+    return naija
+      ? `My customer just tell me say she happy with the ${product}! 😊
+
+Price: ${price}
+
+If she happy, you go happy too!
+DM me to get yours today! ⭐`
+      : `Customer Review! ⭐
+
+"I love my ${product}! Best purchase I've made." — Happy Customer
+
+Price: ${price}
+
+Want the same results? DM me today! 😊`;
+  }
+  if(type==='cta'){
+    return naija
+      ? `You still dey sleep? 😂
+
+${product} dey wait for you!
+Price: ${price}
+
+DM me right now make I sort you out!
+No dulling! 🔥`
+      : `Still thinking about it? 😊
+
+${product} is still available at ${price}.
+
+DM me today and let's get you sorted!
+Delivery available nationwide 📦`;
+  }
+  return '';
+}
+function resetStatus(){
+  document.querySelectorAll('.status-type').forEach(s=>s.classList.remove('sel'));
+  stType=''; document.getElementById('statusOutput').classList.remove('show');
+}
+function stShareWA(){ window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('statusMsg').textContent),'_blank'); }
+function stNativeShare(){ if(navigator.share){navigator.share({text:document.getElementById('statusMsg').textContent});}else{navigator.clipboard.writeText(document.getElementById('statusMsg').textContent).then(()=>showToast('Copied!'));} }
+
+/* ===== NAIJA STYLE TOGGLE FOR SMART REPLY ===== */
+let srStyle = 'english';
+function setSRStyle(s){
+  srStyle = s;
+  const engBtn = document.getElementById('sr-eng');
+  const ngBtn = document.getElementById('sr-naija');
+  if(engBtn) engBtn.className = 'toggle-pill' + (s==='english'?' active-en':'');
+  if(ngBtn) ngBtn.className = 'toggle-pill' + (s==='naija'?' active-ng':'');
+}
+
+
+/* ===== PWA INSTALL ===== */
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('pwaBanner').classList.add('show');
+});
+function installPWA(){
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.waitForChoiceResult().then(()=>{
+    deferredPrompt = null;
+    document.getElementById('pwaBanner').classList.remove('show');
+  });
+}
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/chat2cash/service-worker.js')
+    .then(()=>console.log('SW registered'))
+    .catch(e=>console.log('SW error:',e));
+}
+
+/* ===== WHATSAPP NUMBER CAPTURE ===== */
+async function submitWACapture(){
+  const num = document.getElementById('waCaptureNum').value.trim();
+  if(!num || num.length < 10){ showToast('Please enter a valid WhatsApp number'); return; }
+  try {
+    await fetch('https://formspree.io/f/mkovyanq', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        _subject: 'New WhatsApp Number - Chat2Cash',
+        whatsapp_number: num,
+        source: 'wa_capture_form'
+      })
+    });
+  } catch(e){ console.log('Capture error:', e); }
+  document.getElementById('waCaptureSuccess').classList.add('show');
+  document.getElementById('waCaptureNum').value = '';
+  if(typeof gtag !== 'undefined') gtag('event','wa_number_captured',{event_category:'conversion'});
+}
+
+/* ===== INSTANT DEMO PREFILL ===== */
+function prefillDemo(){
+  setType('single');
+  setStyle('fire');
+  setTimeout(()=>{
+    const fields = {
+      'sp-product': 'Brightening Body Cream',
+      'sp-qty': '500ml bottle',
+      'sp-price': '3500',
+      'sp-target': 'Ladies who want glowing skin',
+      'sp-benefit': 'Smoother glowing skin in 7 days',
+      'sp-speed': 'Same day delivery Lagos',
+      'waNumber': '2348000000000'
+    };
+    Object.entries(fields).forEach(([id, val])=>{
+      const el = document.getElementById(id);
+      if(el) el.value = val;
+    });
+    document.getElementById('sp-currency').value = '₦';
+    showToast('Example loaded! Tap Generate to see the magic ⚡');
+    document.getElementById('tool').scrollIntoView({behavior:'smooth'});
+    if(typeof gtag !== 'undefined') gtag('event','demo_prefilled',{event_category:'engagement'});
+  }, 300);
+}
+
+
+function showInstallGuide(){
+  if(deferredPrompt){
+    installPWA();
+  } else {
+    document.getElementById('installModal').style.display='flex';
+  }
+}
+
+
 /* ===== BOTTOM APP NAVIGATION ===== */
 const navSections = {
   home: 'hero',
@@ -2839,8 +3215,7 @@ const navSections = {
   about: 'about-section'
 };
 
-function navTo(tab){
-  document.getElementById(tab).scrollIntoView({behavior:'smooth'});
+);
 }
   if(tab === 'about'){
     window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
@@ -2922,29 +3297,7 @@ window.addEventListener('scroll', function(){
 </div>
 
 
-<!-- BOTTOM APP NAVIGATION -->
-<nav class="app-nav" id="appNav">
-  <div class="app-nav-item" id="nav-home" onclick="navTo('home')">
-    <div class="app-nav-icon">🏠</div>
-    <div class="app-nav-label">Home</div>
-    <div class="app-nav-dot"></div>
-  </div>
-  <div class="app-nav-item active" id="nav-generate" onclick="navTo('generate')">
-    <div class="app-nav-icon">⚡</div>
-    <div class="app-nav-label">Generate</div>
-    <div class="app-nav-dot"></div>
-  </div>
-  <div class="app-nav-item" id="nav-reply" onclick="navTo('reply')">
-    <div class="app-nav-icon">💬</div>
-    <div class="app-nav-label">Reply</div>
-    <div class="app-nav-dot"></div>
-  </div>
-  <div class="app-nav-item" id="nav-about" onclick="navTo('about')">
-    <div class="app-nav-icon">ℹ️</div>
-    <div class="app-nav-label">About</div>
-    <div class="app-nav-dot"></div>
-  </div>
-</nav>
+
 
 
 </body>
