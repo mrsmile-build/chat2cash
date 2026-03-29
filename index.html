@@ -1715,27 +1715,12 @@ Reply ORDER now 👇<div class="bubble-time">10:42 AM ✓✓</div></div>
 </footer>
 
 <!-- MODAL -->
-<div class="overlay" id="limitModal">
-  <div class="modal">
-    <div class="m-icon">🔒</div>
-    <div class="m-badge">Free Limit Reached</div>
-    <h2>Upgrade to Chat2Cash Pro</h2>
-    <p>You have used your 3 free generations for today. Upgrade for unlimited access and premium features.</p>
-    <ul class="pro-list">
-      <li>✓ Unlimited daily generations</li>
-      <li>✓ All 4 message types</li>
-      <li>✓ 5 premium message templates</li>
-      <li>✓ Bulk WhatsApp link generator</li>
-      <li>✓ Priority support</li>
-    </ul>
-    <button class="btn-up" onclick="doUpgrade()">🚀 Get Pro Access - Coming Soon</button>
-    <button class="btn-mc" onclick="closeModal()"><button onclick="this.closest(\'.overlay\').style.display=\'none\'">Not now, maybe later</button></button>
-  </div>
+
 </div>
 
 <script>
 const FORMSPREE='https://formspree.io/f/mkovyanq';
-const LIMIT=3,KEY='c2c_v4';
+const LIMIT=100,KEY='c2c_v4';
 let mode='fire',msgType='single';
 
 function getUsage(){try{const d=JSON.parse(localStorage.getItem(KEY)||'{}'),t=new Date().toDateString();return d.date===t?d:{date:t,count:0};}catch{return{date:new Date().toDateString(),count:0};}}
@@ -1797,7 +1782,7 @@ function buildLink(number,currency,message){
 
 function generate(){
   const usage=getUsage();
-  if(usage.count>=LIMIT){document.getElementById('limitModal').classList.add('show');return;}
+  
   if(!validate()){shake();return;}
   const d=getFormData();
   const btn=document.getElementById('genBtn'),ldr=document.getElementById('loader');
@@ -2355,7 +2340,7 @@ Rules:
 async function generateMessageAI(){
   // Use existing validation and form data functions
   const usage = getUsage();
-  if(usage.count >= LIMIT){ document.getElementById('limitModal').classList.add('show'); return; }
+  
   if(!validate()){ shake(); return; }
 
   const d = getFormData();
