@@ -1,0 +1,14 @@
+{
+  "name": "Chat2Cash",
+  "short_name": "Chat2Cash",
+  "description": "Generate winning WhatsApp sales messages instantly",
+  "start_url": "/chat2cash/",
+  "display": "standalone",
+  "background_color": "#090c0a",
+  "theme_color": "#25D366",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/chat2cash/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/chat2cash/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
