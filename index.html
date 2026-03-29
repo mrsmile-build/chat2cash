@@ -728,6 +728,17 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28
 .status-preview{background:#0b1410;border-radius:12px;padding:16px;margin-bottom:14px;}
 .status-preview-text{font-size:14px;color:#e9edef;line-height:1.7;white-space:pre-wrap;}
 
+
+/* ===== BOTTOM NAV ===== */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(9,12,10,0.97);border-top:1px solid rgba(37,211,102,0.15);display:flex;justify-content:space-around;align-items:center;padding:6px 0 8px;backdrop-filter:blur(20px);}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 12px;flex:1;-webkit-tap-highlight-color:transparent;}
+.bnav-icon{font-size:20px;line-height:1.2;}
+.bnav-label{font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;color:#6b7d70;letter-spacing:0.3px;}
+.bnav-item.on .bnav-label{color:#25D366;}
+.bnav-dot{width:4px;height:4px;border-radius:50%;background:#25D366;margin-top:2px;opacity:0;}
+.bnav-item.on .bnav-dot{opacity:1;}
+body{padding-bottom:65px;}
+
 </style>
 
 <link rel="manifest" href="/chat2cash/manifest.json">
@@ -2781,6 +2792,40 @@ function showInstallGuide(){
   else { document.getElementById('installModal').style.display='flex'; }
 }
 
+
+/* ===== BOTTOM NAV ===== */
+function bnav(tab){
+  document.querySelectorAll('.bnav-item').forEach(i=>i.classList.remove('on'));
+  document.getElementById('bn-'+tab).classList.add('on');
+  if(tab==='home'){ window.scrollTo({top:0,behavior:'smooth'}); return; }
+  if(tab==='generate'){
+    const el=document.getElementById('tool');
+    if(el) window.scrollTo({top:el.offsetTop-60,behavior:'smooth'});
+    return;
+  }
+  if(tab==='reply'){
+    const el=document.getElementById('smartReplySection');
+    if(el) window.scrollTo({top:el.offsetTop-60,behavior:'smooth'});
+    return;
+  }
+  if(tab==='about'){
+    window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+    return;
+  }
+}
+window.addEventListener('scroll',function(){
+  const y=window.scrollY;
+  const tool=document.getElementById('tool');
+  const reply=document.getElementById('smartReplySection');
+  let tab='home';
+  if(tool && y>=tool.offsetTop-100) tab='generate';
+  if(reply && y>=reply.offsetTop-100) tab='reply';
+  if(y+window.innerHeight>=document.body.scrollHeight-300) tab='about';
+  document.querySelectorAll('.bnav-item').forEach(i=>i.classList.remove('on'));
+  const el=document.getElementById('bn-'+tab);
+  if(el) el.classList.add('on');
+},{passive:true});
+
 /* Count-up on scroll */
 (function(){
   const nums = document.querySelectorAll('.proof-num');
@@ -2826,6 +2871,30 @@ function showInstallGuide(){
     <button onclick="document.getElementById('installModal').style.display='none'" style="width:100%;background:linear-gradient(135deg,#25D366,#1db954);color:#000;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;padding:14px;border-radius:12px;border:none;cursor:pointer;">Got it!</button>
   </div>
 </div>
+
+
+<nav class="bnav" id="bnav">
+  <div class="bnav-item" id="bn-home" onclick="bnav('home')">
+    <div class="bnav-icon">🏠</div>
+    <div class="bnav-label">Home</div>
+    <div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item on" id="bn-generate" onclick="bnav('generate')">
+    <div class="bnav-icon">⚡</div>
+    <div class="bnav-label">Generate</div>
+    <div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" id="bn-reply" onclick="bnav('reply')">
+    <div class="bnav-icon">💬</div>
+    <div class="bnav-label">Reply</div>
+    <div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" id="bn-about" onclick="bnav('about')">
+    <div class="bnav-icon">ℹ️</div>
+    <div class="bnav-label">About</div>
+    <div class="bnav-dot"></div>
+  </div>
+</nav>
 
 </body>
 </html>
